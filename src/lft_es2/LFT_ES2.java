@@ -26,8 +26,12 @@ public class LFT_ES2 {
         final char ch = s.charAt(i++);
         switch (state) {
             case 0:
-                if(ch == '+' || ch == '-' || ch == '.' || ch == 'e' || ( ch >= '0' && ch <= '9'  ) )
+                if(ch == '+' || ch == '-' || ( ch >= '0' && ch <= '9'  ) )
                     state = 1;
+                else if(ch== '.')
+                    state = 2;
+                else if(ch == 'e')
+                    state = 4;
                 else
                     state = -1;
                 break;
@@ -35,36 +39,56 @@ public class LFT_ES2 {
                 if( ch >= '0' && ch <= '9'  ) 
                     state = 1;
                 else if(ch == 'e')
-                    state = 3;
-                else if(ch == '.')
                     state = 4;
+                else if(ch == '.')
+                    state = 2;
+                else
+                    state = -1;
+                break;
+            case 2:
+                if( ch >= '0' && ch <= '9'  )
+                    state = 3;
                 else
                     state = -1;
                 break;
             case 3:
-                if(ch == '+' || ch == '-' || ch == '.' || ch == 'e' || ( ch >= '0' && ch <= '9'  ))
-                    state = 5;
+                if( ch >= '0' && ch <= '9'  ) 
+                    state = 3;
+                else if(ch == 'e')
+                    state = 4;
                 else
                     state = -1;
                 break;
             case 4:
-                if( ch >= '0' && ch <= '9'  ) 
-                    state = 4;
-                else if(ch == 'e')
-                    state = 3;
+                if(ch == '+' || ch == '-' )
+                    state = 5;
+                else if( ch >= '0' && ch <= '9'  )
+                    state = 6;
                 else
                     state = -1;
                 break;
+            case 5:
+                if( ch >= '0' && ch <= '9'  )
+                    state = 6;
+                else
+                    state = -1;
+            case 6:
+                if( ch >= '0' && ch <= '9'  )
+                    state = 6;
+                else
+                    state = -1;
+                
+                            
             }
         }
-        return state > 1;
+        return state == 1 || state == 3 || state == 6 ;
     }
     
     public static void main(String[] args) throws Exception
     {
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(inputStreamReader);
-        System.out.println("Type the line:");
+        System.out.println("Input:");
         String line = reader.readLine();
 
         
