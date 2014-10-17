@@ -26,12 +26,14 @@ public class LFT_ES2 {
         final char ch = s.charAt(i++);
         switch (state) {
             case 0:
-                if(ch == '+' || ch == '-' || ( ch >= '0' && ch <= '9'  ) )
+                if ( ch >= '0' && ch <= '9'  ) 
                     state = 1;
                 else if(ch== '.')
                     state = 2;
                 else if(ch == 'e')
                     state = 4;
+                else if(ch == '+' || ch == '-' )
+                    state = 7;
                 else
                     state = -1;
                 break;
@@ -77,7 +79,15 @@ public class LFT_ES2 {
                     state = 6;
                 else
                     state = -1;
-                
+            case 7:
+                if( ch >= '0' && ch <= '9'  )
+                    state = 1;
+                else if(ch == 'e')
+                    state = 4;
+                else if(ch == '.')
+                    state = 2;
+                else
+                    state = -1;
                             
             }
         }
