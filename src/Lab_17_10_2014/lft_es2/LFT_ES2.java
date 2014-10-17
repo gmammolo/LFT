@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package lft_es2;
+package Lab_17_10_2014.lft_es2;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
