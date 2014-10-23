@@ -4,19 +4,19 @@
  * and open the template in the editor.
  */
 
-package Lab_17_10_2014.lft_es1;
+package LFT.Lab_17_10_2014.lft_es1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * ESERCIZIO 1 B
- * DFA: Creare un linguaggio che riconosce le stringhe in cui non appaiono 3 
- * zeri consegutivi (complementare parte A)
+ * ESERCIZIO 1 A
+ * DFA: Creare un linguaggio che riconosce le stringhe in cui appaiono almeno 3 
+ * zeri consegutivi
  * Alfabeto: {0,1}
  * @author Giuseppe
  */
-public class LFT_ES1_TreZeriB {
+public class LFT_ES1_TreZeriA {
 
     public static boolean scan(String s)
     {
@@ -57,7 +57,7 @@ public class LFT_ES1_TreZeriB {
                 break;
             }
         }
-        return state != -1 && state != 3;
+        return state == 3;
     }
     
     public static void main(String[] args) throws Exception

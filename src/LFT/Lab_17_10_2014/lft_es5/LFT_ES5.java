@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Lab_17_10_2014.lft_es5;
+package LFT.Lab_17_10_2014.lft_es5;
 
-import Lab_17_10_2014.lft_es4.*;
-import Lab_17_10_2014.lft_es1.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 

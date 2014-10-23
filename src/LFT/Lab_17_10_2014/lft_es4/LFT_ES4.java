@@ -4,19 +4,20 @@
  * and open the template in the editor.
  */
 
-package Lab_17_10_2014.lft_es1;
+package LFT.Lab_17_10_2014.lft_es4;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * ESERCIZIO 1 A
- * DFA: Creare un linguaggio che riconosce le stringhe in cui appaiono almeno 3 
- * zeri consegutivi
- * Alfabeto: {0,1}
+ * ESERCIZIO 4
+ * Progettare e implementare un DFA che riconosca il linguaggio degli
+ * identicatori in un linguaggio in stile Java: un identicatore e una sequenza non vuota di lettere,
+ * numeri, ed il simbolo di sottolineatura _ che non comincia con un numero e che non puo essere
+ * composto solo da un _ .
  * @author Giuseppe
  */
-public class LFT_ES1_TreZeriA {
+public class LFT_ES4 {
 
     public static boolean scan(String s)
     {
@@ -26,38 +27,28 @@ public class LFT_ES1_TreZeriA {
         final char ch = s.charAt(i++);
         switch (state) {
             case 0:
-                if(ch == '0')
+                if(ch >= 'a' && ch <='z' || ch >= 'A' && ch <='Z')
                     state = 1;
-                else if (ch == '1')
-                    state = 0;
+                else if (ch == '_')
+                    state = 2;
                 else
                     state = -1;
                 break;
             case 1:
-                if(ch == '0')
-                    state = 2;
-                else if(ch == '1')
-                    state = 0;
+                if(ch >= 'a' && ch <='z' || ch >= 'A' && ch <='Z' || ch >= '0' && ch <= '9')
+                    state = 1;
                 else
                     state = -1;
                 break;
             case 2:
-                if(ch == '0')
-                    state = 3;
-                else if(ch == '1')
-                    state = 0;
-                else
-                    state = -1;
-                break;
-            case 3:
-                if (ch == '0' || ch == '1')
-                    state = 3;
+                if(ch >= 'a' && ch <='z' || ch >= 'A' && ch <='Z' || ch >= '0' && ch <= '9')
+                    state = 1;
                 else
                     state = -1;
                 break;
             }
         }
-        return state == 3;
+        return state == 1;
     }
     
     public static void main(String[] args) throws Exception

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Lab_17_10_2014.lft_es2;
+package LFT.Lab_17_10_2014.lft_es3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
  * Alfabeto: {0,1}
  * @author Giuseppe
  */
-public class LFT_ES2 {
+public class LFT_ES3 {
 
     public static boolean scan(String s)
     {
@@ -34,6 +34,8 @@ public class LFT_ES2 {
                     state = 4;
                 else if(ch == '+' || ch == '-' )
                     state = 7;
+                else if(ch == ' ')
+                    state=0;
                 else
                     state = -1;
                 break;
