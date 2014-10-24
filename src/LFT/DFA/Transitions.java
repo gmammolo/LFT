@@ -7,6 +7,7 @@ package LFT.DFA;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 public class Transitions {
@@ -33,6 +34,12 @@ public class Transitions {
     }
     
     
+    
+    
+    /**
+     * Restituisce il contenuto delle transizioni in formato Dot
+     * @return 
+     */
     public String toDot()
     {
         String s="";
@@ -48,27 +55,40 @@ public class Transitions {
     }
     
     
+    
+    /**
+     * Restituisce il contenuto delle transizioni in formato java
+     * @return 
+     */
     public String toJava()
     {
         String s = "";
         if(transition.size()>0)
         {
+            //sorting
+            Collections.sort(transition, new Comparator<Transition >() {
+                @Override
+                public int compare(Transition t, Transition t1) {
+                    return (t.start.compareTo(t1.start));
+                }
+            });
+            
             int oldstate = ((Transition)transition.get(0)).start;
-            s+="\t\t\tcase "+oldstate+":\n";
+            s+="\t\tcase "+oldstate+":\n";
             s+="\t\t\t"+((Transition)transition.get(0)).toJava();
             for(int i=1; i<transition.size()-1;i++)
             {
                 Transition tr= ((Transition)transition.get(i));
                 if(tr.start != oldstate)
                 {
-                    s +="\t\t\telse \n \t\t\t\tstate == -1; \n \t\t\tbreak;\n";
+                    s +="\t\t\telse \n \t\t\t\tstate = -1; \n \t\t\tbreak;\n";
                     oldstate = tr.start;
-                    s+="\t\t\tcase "+oldstate+":\n\t\t\t"+tr.toJava();
+                    s+="\t\tcase "+oldstate+":\n\t\t\t"+tr.toJava();
                 }
                 else
                     s+="\t\t\telse "+tr.toJava();
             }
-            s +="\t\t\telse \n \t\t\t\tstate == -1; \n \t\t\tbreak;\n";
+            s +="\t\t\telse \n \t\t\t\tstate = -1; \n \t\t\tbreak;\n";
         }
         
         return s;
@@ -174,7 +194,7 @@ public class Transitions {
                 s+="ch == '"+label.get(i)+"' || ";
             }
             s+="ch == "+label.get(label.size()-1)+" ) \n"+
-               "\t\t\t\tstate == "+end+";\n";
+               "\t\t\t\tstate = "+end+";\n";
             return s;
         }
 

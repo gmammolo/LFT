@@ -226,7 +226,7 @@ public class DFA
         }
         
         s+=arr_tmp.toJava();
-        s+="\t\t}\n";
+        s+="\t\t\t}\n\t\t}\n";
         
         s+="\t\treturn ";
         Object[] arr =finalStates.toArray();
@@ -234,7 +234,7 @@ public class DFA
         {
             s += "state == "+arr[i]+" && ";
         }
-        s+="state == "+String.valueOf(arr[arr.length-1])+";\n";
+        s+="state == "+String.valueOf(arr[arr.length-1])+";\n\t\t}\n";
         s+="\tpublic static void main(String[] args)\n" +
            "\t{\n" +
            "\t\tSystem.out.println(scan(args[0]) ? \"OK\" : \"NOPE\");\n" +
