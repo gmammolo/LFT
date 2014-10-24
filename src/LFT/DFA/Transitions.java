@@ -74,21 +74,21 @@ public class Transitions {
             });
             
             int oldstate = ((Transition)transition.get(0)).start;
-            s+="\t\tcase "+oldstate+":\n";
-            s+="\t\t\t"+((Transition)transition.get(0)).toJava();
-            for(int i=1; i<transition.size()-1;i++)
+            s+="\t\t\tcase "+oldstate+":\n";
+            s+="\t\t\t\t"+((Transition)transition.get(0)).toJava();
+            for(int i=1; i<transition.size();i++)
             {
                 Transition tr= ((Transition)transition.get(i));
                 if(tr.start != oldstate)
                 {
-                    s +="\t\t\telse \n \t\t\t\tstate = -1; \n \t\t\tbreak;\n";
+                    s +="\t\t\t\telse \n \t\t\t\t\tstate = -1; \n \t\t\t\tbreak;\n";
                     oldstate = tr.start;
-                    s+="\t\tcase "+oldstate+":\n\t\t\t"+tr.toJava();
+                    s+="\t\t\tcase "+oldstate+":\n\t\t\t\t"+tr.toJava();
                 }
                 else
-                    s+="\t\t\telse "+tr.toJava();
+                    s+="\t\t\t\telse "+tr.toJava();
             }
-            s +="\t\t\telse \n \t\t\t\tstate = -1; \n \t\t\tbreak;\n";
+            s +="\t\t\t\telse \n \t\t\t\t\tstate = -1; \n \t\t\t\tbreak;\n";
         }
         
         return s;
@@ -189,12 +189,12 @@ public class Transitions {
         public String toJava()
         {
             String s="if(";
-            for(int i=0; i<label.size()-2;i++)
+            for(int i=0; i<label.size()-1;i++)
             {
                 s+="ch == '"+label.get(i)+"' || ";
             }
-            s+="ch == "+label.get(label.size()-1)+" ) \n"+
-               "\t\t\t\tstate = "+end+";\n";
+            s+="ch == '"+label.get(label.size()-1)+"' ) \n"+
+               "\t\t\t\t\tstate = "+end+";\n";
             return s;
         }
 

@@ -214,7 +214,7 @@ public class DFA
                     "\t\tint state = 0;\n" +
                     "\t\tint i = 0;\n" +
                     "\t\twhile(state >= 0 && i < s.length()) {\n" +
-                    "\t\t\tfinal char ch = s.charAt(i++);\n" +
+                    "\t\tfinal char ch = s.charAt(i++);\n" +
                     "\t\tswitch(state) {\n";
         Transitions arr_tmp = new Transitions();
         for(Entry<Move, Integer> entry : transitions.entrySet()) {
@@ -230,7 +230,7 @@ public class DFA
         
         s+="\t\treturn ";
         Object[] arr =finalStates.toArray();
-        for(int i=0; i< finalStates.size()-2;i++)
+        for(int i=0; i< finalStates.size()-1;i++)
         {
             s += "state == "+arr[i]+" && ";
         }

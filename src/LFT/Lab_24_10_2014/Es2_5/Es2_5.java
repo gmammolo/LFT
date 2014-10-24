@@ -35,8 +35,8 @@ public class Es2_5 {
     public static void toDot(String s) {
         
         GenerateDFA();
-        dfa.toDOT(s);
-//        dfa.toJava(s);
+//        dfa.toDOT(s);
+        dfa.toJava(s);
     }
 
     public static void main(String[] args) throws Exception {
