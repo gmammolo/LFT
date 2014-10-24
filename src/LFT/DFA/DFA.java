@@ -196,7 +196,7 @@ public class DFA
                 // do what you have to do here
                 // In your case, an other loop.
         }
-        text+=arr_tmp.toString();
+        text+=arr_tmp.toDot();
         text+="\n}";
         System.out.println(text);
 
@@ -208,6 +208,39 @@ public class DFA
      * @param name Nome della classe da generare.
      */
     public void toJava(String name) {
-	// DA IMPLEMENTARE
+	String s="public class "+name+" {\n" +
+                    "\tpublic static boolean scan(String s)\n" +
+                    "\t{\n" +
+                    "\t\tint state = 0;\n" +
+                    "\t\tint i = 0;\n" +
+                    "\t\twhile(state >= 0 && i < s.length()) {\n" +
+                    "\t\t\tfinal char ch = s.charAt(i++);\n" +
+                    "\t\tswitch(state) {\n";
+        Transitions arr_tmp = new Transitions();
+        for(Entry<Move, Integer> entry : transitions.entrySet()) {
+            Move key = entry.getKey();
+            Integer value = entry.getValue();
+            
+            arr_tmp.AddTransiction(key.start, key.ch, value);
+//            s+="\t\t\tcase "+String.valueOf(key.start)+" : \n";  
+        }
+        
+        s+=arr_tmp.toJava();
+        s+="\t\t}\n";
+        
+        s+="\t\treturn ";
+        Object[] arr =finalStates.toArray();
+        for(int i=0; i< finalStates.size()-2;i++)
+        {
+            s += "state == "+arr[i]+" && ";
+        }
+        s+="state == "+String.valueOf(arr[arr.length-1])+";\n";
+        s+="\tpublic static void main(String[] args)\n" +
+           "\t{\n" +
+           "\t\tSystem.out.println(scan(args[0]) ? \"OK\" : \"NOPE\");\n" +
+            "\t}\n" +
+            "}\n";
+        
+        System.out.println(s);
     }
 }

@@ -33,8 +33,7 @@ public class Transitions {
     }
     
     
-    @Override
-    public String toString()
+    public String toDot()
     {
         String s="";
         for(Object o : transition)
@@ -42,9 +41,36 @@ public class Transitions {
             if (o instanceof Transition) {
                 Transition m = (Transition) o;
             
-                s+=m.toString();
+                s+=m.toDot();
             }
         }
+        return s;
+    }
+    
+    
+    public String toJava()
+    {
+        String s = "";
+        if(transition.size()>0)
+        {
+            int oldstate = ((Transition)transition.get(0)).start;
+            s+="\t\t\tcase "+oldstate+":\n";
+            s+="\t\t\t"+((Transition)transition.get(0)).toJava();
+            for(int i=1; i<transition.size()-1;i++)
+            {
+                Transition tr= ((Transition)transition.get(i));
+                if(tr.start != oldstate)
+                {
+                    s +="\t\t\telse \n \t\t\t\tstate == -1; \n \t\t\tbreak;\n";
+                    oldstate = tr.start;
+                    s+="\t\t\tcase "+oldstate+":\n\t\t\t"+tr.toJava();
+                }
+                else
+                    s+="\t\t\telse "+tr.toJava();
+            }
+            s +="\t\t\telse \n \t\t\t\tstate == -1; \n \t\t\tbreak;\n";
+        }
+        
         return s;
     }
     
@@ -111,8 +137,7 @@ public class Transitions {
             
         }
         
-        @Override
-        public String toString()
+        public String toDot()
         {
             String s ="";
             Collections.sort(label);
@@ -138,6 +163,19 @@ public class Transitions {
                 
             }
             return "q"+this.start+" -> q"+end+" [ label = \""+s+"\" ] \n";
+        }
+        
+        
+        public String toJava()
+        {
+            String s="if(";
+            for(int i=0; i<label.size()-2;i++)
+            {
+                s+="ch == '"+label.get(i)+"' || ";
+            }
+            s+="ch == "+label.get(label.size()-1)+" ) \n"+
+               "\t\t\t\tstate == "+end+";\n";
+            return s;
         }
 
     }
