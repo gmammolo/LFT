@@ -186,15 +186,17 @@ public class DFA
             text+=" q"+c+"; ";
         }
         text+="\n node [shape = circle];\n";
-        
+        Transitions arr_tmp = new Transitions();
         for(Entry<Move, Integer> entry : transitions.entrySet()) {
             Move key = entry.getKey();
             Integer value = entry.getValue();
             
-            text+="q"+key.start+" -> q"+value+" [ label = \""+key.ch+"\" ] \n";
+            arr_tmp.AddTransiction(key.start, key.ch, value);
+            //text+="q"+key.start+" -> q"+value+" [ label = \""+key.ch+"\" ] \n";
                 // do what you have to do here
                 // In your case, an other loop.
         }
+        text+=arr_tmp.toString();
         text+="\n}";
         System.out.println(text);
 
