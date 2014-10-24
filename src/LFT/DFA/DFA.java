@@ -3,6 +3,7 @@ package LFT.DFA;
 
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * Un oggetto della classe DFA rappresenta un automa a stati finiti
@@ -44,6 +45,26 @@ public class DFA
 	return numberOfStates++;
     }
 
+    /**
+     * Aggiunge una serie di transizioni all' automa
+     * @param  p  Lo stato di partenza della transizione.
+     * @param  start Il simbolo di partenza che etichetta la transizione.
+     * @param  end Il simbolo di chiusura che etichetta la transizione.
+     * @param  q  Lo stato di arrivo della transizione.
+     * @return <code>true</code> se lo stato di partenza e lo stato di
+     *         arrivo sono validi, <code>false</code> altrimenti.
+     */
+    public boolean setMove (int p, char start, char end, int q)
+    {
+        boolean check = true;
+        char ch= start;
+        while (ch <= end)
+        {
+            check = setMove(p, ch, q);
+        }
+        return check;
+    }
+    
     /**
      * Aggiunge una transizione all'automa.
      * @param  p  Lo stato di partenza della transizione.
@@ -157,7 +178,27 @@ public class DFA
      */
     public void toDOT(String name) {
 	// DA IMPLEMENTARE
-    }
+        String text="digraph "+name+" {\n" +
+                    "rankdir=LR;\n" +
+                    "node [shape = doublecircle];\n";
+        for(Integer c : finalStates )
+        {
+            text+=" q"+c+"; ";
+        }
+        text+="\n node [shape = circle];\n";
+        
+        for(Entry<Move, Integer> entry : transitions.entrySet()) {
+            Move key = entry.getKey();
+            Integer value = entry.getValue();
+            
+            text+="q"+key.start+" -> q"+value+" [ label = \""+key.ch+"\" ] \n";
+                // do what you have to do here
+                // In your case, an other loop.
+        }
+        text+="\n}";
+        System.out.println(text);
+
+                }
 
     /**
      * Stampa una classe Java con un metodo <code>scan</code> che implementa 
