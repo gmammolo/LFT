@@ -6,6 +6,7 @@
 package LFT.DFA;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Transitions {
@@ -70,11 +71,11 @@ public class Transitions {
 //            this.label= "";
 //        }
 
-                /**
-         * Crea uno stato di transizione dal punto start al punto end
-         * @param start
-         * @param end 
-         */
+        /**
+        * Crea uno stato di transizione dal punto start al punto end
+        * @param start
+        * @param end 
+        */
         public Transition(int start, int end, char ch)
         {
             this.start = start;
@@ -113,12 +114,29 @@ public class Transitions {
         @Override
         public String toString()
         {
-            String s="";
-            for(Character c : label)
+            String s ="";
+            Collections.sort(label);
+            if(label.size()>0)
             {
-                s+=c+",";
+                char old = label.get(0);
+                s = old+"";
+                for(Character c : label)
+                {
+                    if( old+1 == c)
+                    {
+                        if( s.charAt(s.length()-1)!= '-' )
+                            s+="-";
+                    }
+                    else if(old != c && s.charAt(s.length()-1)!= old )
+                    {
+                        s+=old+","+c;
+                    }
+                    old=c;
+                }
+                if(s.charAt(s.length()-1)!= old)
+                    s+=old;
+                
             }
-            
             return "q"+this.start+" -> q"+end+" [ label = \""+s+"\" ] \n";
         }
 

@@ -29,6 +29,11 @@ public class Es2_5 {
         dfa.setMove(2, '0', 3);
         dfa.setMove(3, '1', 3);
         dfa.setMove(3, '0', 3);
+        dfa.setMove(3, '2', 3);
+        dfa.setMove(3, '3', 3);
+        dfa.setMove(3, 'a', 3);
+        dfa.setMove(3, 'b', 3);
+        dfa.setMove(3, 'd', 3);
         dfa.addFinalState(3);
     }
     
