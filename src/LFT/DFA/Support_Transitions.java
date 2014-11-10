@@ -8,17 +8,64 @@ package LFT.DFA;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 
-public class Transitions {
+public class Support_Transitions {
 
-    private ArrayList transition;
+    private ArrayList<Transition> transition;
     
     
-    public Transitions(){
+    public Support_Transitions(){
         transition = new ArrayList();
     }
     
+    
+    public HashSet<Integer> InitialState()
+    {
+        HashSet<Integer> state = new HashSet<Integer>();
+        for(Transition tr : transition)
+        {
+            state.add(tr.start);
+        }
+        return state;
+    }
+    
+    
+    public Boolean[] reach(int start, int numberOfStates)
+    {
+        Boolean[] res = new Boolean[numberOfStates];
+        for(int i=0; i< numberOfStates;i++)
+        {
+           res[i] = (start == i);
+        }
+        for(Transition tr: transition)
+        {
+            if(tr.start==start)
+            {
+                res[tr.end] = true;
+            }   
+        }
+        return res;
+    }
+    
+    
+    /**
+     * Indica una transizione 
+     * @param start stato di partenza
+     * @param c ccarattere
+     * @return stato d arrivo
+     */
+    public Integer GetTransition(Integer start, char c)
+    {
+        for(Transition tr: transition)
+        {
+            if(tr.start==start && tr.label.contains(c))
+                return tr.end;
+                
+        }
+        return -1;
+    }
     
     public void AddTransiction(int start, char ch, int end)
     {

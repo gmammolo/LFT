@@ -36,16 +36,31 @@ public class Es2_5 {
         
         GenerateDFA();
 //        dfa.toDOT(s);
+        dfa.toDOT(s);
+    }
+    
+        public static void toJava(String s) {
+        
+        GenerateDFA();
+//        dfa.toDOT(s);
         dfa.toJava(s);
     }
 
+        
+    public static void empty()
+    {
+        GenerateDFA();
+        dfa.empty();
+    }
+        
     public static void main(String[] args) throws Exception {
 //        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 //        BufferedReader reader = new BufferedReader(inputStreamReader);
 //        System.out.println("Type the line:");
 //        String line = reader.readLine();
 
-        toDot("esempio");
+//        toJava("Es2_5");
+        empty();
     }
     
 }

@@ -186,7 +186,7 @@ public class DFA
             text+=" q"+c+"; ";
         }
         text+="\n node [shape = circle];\n";
-        Transitions arr_tmp = new Transitions();
+        Support_Transitions arr_tmp = new Support_Transitions();
         for(Entry<Move, Integer> entry : transitions.entrySet()) {
             Move key = entry.getKey();
             Integer value = entry.getValue();
@@ -202,6 +202,21 @@ public class DFA
 
                 }
 
+    
+    private Support_Transitions GenerateSupport()
+    {
+        Support_Transitions arr_tmp = new Support_Transitions();
+        for(Entry<Move, Integer> entry : transitions.entrySet()) {
+            Move key = entry.getKey();
+            Integer value = entry.getValue();
+            
+            arr_tmp.AddTransiction(key.start, key.ch, value);
+//            s+="\t\t\tcase "+String.valueOf(key.start)+" : \n";  
+        }
+        return arr_tmp;
+    }
+    
+    
     /**
      * Stampa una classe Java con un metodo <code>scan</code> che implementa 
      * l'automa.
@@ -216,15 +231,15 @@ public class DFA
                     "\t\twhile(state >= 0 && i < s.length()) {\n" +
                     "\t\tfinal char ch = s.charAt(i++);\n" +
                     "\t\tswitch(state) {\n";
-        Transitions arr_tmp = new Transitions();
-        for(Entry<Move, Integer> entry : transitions.entrySet()) {
-            Move key = entry.getKey();
-            Integer value = entry.getValue();
-            
-            arr_tmp.AddTransiction(key.start, key.ch, value);
-//            s+="\t\t\tcase "+String.valueOf(key.start)+" : \n";  
-        }
-        
+//        Support_Transitions arr_tmp = new Support_Transitions();
+//        for(Entry<Move, Integer> entry : transitions.entrySet()) {
+//            Move key = entry.getKey();
+//            Integer value = entry.getValue();
+//            
+//            arr_tmp.AddTransiction(key.start, key.ch, value);
+////            s+="\t\t\tcase "+String.valueOf(key.start)+" : \n";  
+//        }
+        Support_Transitions arr_tmp = GenerateSupport();
         s+=arr_tmp.toJava();
         s+="\t\t\t}\n\t\t}\n";
         
@@ -243,4 +258,54 @@ public class DFA
         
         System.out.println(s);
     }
+    
+    
+    /**************PROBLEMI DI RAGGIUNGIBILITA'******************/
+    
+    
+    protected void reach(Integer state)
+    {
+//        Metodo SUpport
+//        Support_Transitions arr_tmp = GenerateSupport();
+//        Boolean[] res = arr_tmp.reach(state, numberOfStates);
+        
+//        Metodo Normale
+        Boolean[] res = new Boolean[numberOfStates];
+        for(int i=0; i< numberOfStates;i++)
+        {
+           res[i] = (state == i);
+        }
+        for(int i=0; i< numberOfStates;i++)
+        {
+            for(Entry<Move, Integer> entry : transitions.entrySet()) {
+                Move key = entry.getKey();
+                Integer value = entry.getValue();
+                
+                if(key.start == state)
+                    res[value] = true;
+                    
+            }
+        }
+ 
+    }
+    
+    /**
+     *
+     * @return boolean  True se e solo se l’automa riconosce il linguaggio vuoto
+     */
+    public boolean empty()
+    {
+        reach(0);
+        return false;
+    }
+    
+    /**
+     * 
+     */
+    public void sink()
+    {
+        
+    }
+    
+    
 }
