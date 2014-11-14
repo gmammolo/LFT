@@ -125,6 +125,19 @@ public class DFA
 	return numberOfStates;
     }
 
+    
+    public  HashSet<Integer> GetAllState() {
+        HashSet<Integer> result = new HashSet<Integer>() ;
+        for(Entry<Move, Integer> entry : transitions.entrySet()) {
+            Move m = entry.getKey();
+            Integer end = entry.getValue();
+	    result.add(m.start);
+            result.add(end);
+        }
+	return result;
+
+    }
+    
     /**
      * Restituisce l'alfabeto dell'automa, ovvero l'insieme di simboli
      * che compaiono come etichette delle transizioni dell'automa.
@@ -263,7 +276,7 @@ public class DFA
     /**************PROBLEMI DI RAGGIUNGIBILITA'******************/
     
     
-    protected void reach(Integer state)
+    protected HashSet<Integer> reach(Integer state)
     {
 //        Metodo SUpport
 //        Support_Transitions arr_tmp = GenerateSupport();
@@ -275,18 +288,34 @@ public class DFA
         {
            res[i] = (state == i);
         }
-        for(int i=0; i< numberOfStates;i++)
+        boolean check=true;
+        while(check)
         {
-            for(Entry<Move, Integer> entry : transitions.entrySet()) {
-                Move key = entry.getKey();
-                Integer value = entry.getValue();
-                
-                if(key.start == state)
-                    res[value] = true;
-                    
+            check=false;
+            for(int i=0; i< numberOfStates;i++)
+            {
+                for(Entry<Move, Integer> entry : transitions.entrySet()) {
+                    Move key = entry.getKey();
+                    Integer value = entry.getValue();
+
+                    if(key.start == state)
+                    {
+                        res[value] = true;
+                        check = true;
+                    }
+
+                }
             }
         }
- 
+        
+        
+        //genera hashset<integer>
+        HashSet<Integer> result=new HashSet<>();
+        for(int i=0; i< numberOfStates;i++)
+        {
+           if(res[i])result.add(i);
+        }
+        return result;
     }
     
     /**
@@ -302,10 +331,25 @@ public class DFA
     /**
      * 
      */
-    public void sink()
+    public HashSet<Integer> sink()
     {
-        
+        HashSet<Integer> result= new HashSet<Integer>();
+        HashSet<Integer> AllStates = GetAllState();
+        for(Integer state : AllStates)
+        {
+            HashSet<Integer> tree = reach(state);
+            boolean check = false;
+            for(Integer finalstate : finalStates)
+            {
+                if(tree.contains(finalstate))
+                    check = true;
+            }
+            if(!check)
+                result.add(state);
+        }
+        return result;
     }
+    
     
     
 }
