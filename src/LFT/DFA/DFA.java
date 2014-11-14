@@ -276,8 +276,10 @@ public class DFA
     /**************PROBLEMI DI RAGGIUNGIBILITA'******************/
     
     
-    protected HashSet<Integer> reach(Integer state)
+    public HashSet<Integer> reach(Integer state)
     {
+        if(!validState(state))
+            return null;
 //        Metodo SUpport
 //        Support_Transitions arr_tmp = GenerateSupport();
 //        Boolean[] res = arr_tmp.reach(state, numberOfStates);
@@ -298,10 +300,9 @@ public class DFA
                     Move key = entry.getKey();
                     Integer value = entry.getValue();
 
-                    if(key.start == state)
+                    if(res[key.start] && !res[value] && validState(value) )
                     {
-                        res[value] = true;
-                        check = true;
+                        res[value] = check =true;
                     }
 
                 }

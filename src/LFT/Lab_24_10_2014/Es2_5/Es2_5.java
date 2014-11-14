@@ -9,6 +9,7 @@ import LFT.DFA.DFA;
 import static LFT.Lab_17_10_2014.lft_es5.LFT_ES5B.GenerateDFA;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Es2_5 {
         
     public static void GenerateDFA()
     {
-        dfa = new DFA(4);
+        dfa = new DFA(6);
         dfa.setMove(0, '1', 0);
         dfa.setMove(0, '0', 1);
         dfa.setMove(1, '1', 0);
@@ -29,7 +30,10 @@ public class Es2_5 {
         dfa.setMove(2, '0', 3);
         dfa.setMove(3, '1', 3);
         dfa.setMove(3, '0', 3);
+        
+        dfa.setMove(4, '0', 5); //add test
         dfa.addFinalState(3);
+        dfa.addFinalState(2); //add test
     }
     
     public static void toDot(String s) {
@@ -50,7 +54,9 @@ public class Es2_5 {
     public static void empty()
     {
         GenerateDFA();
-        dfa.empty();
+        dfa.toDOT("esempio");
+        HashSet<Integer> t =dfa.reach(0);
+        
     }
         
     public static void main(String[] args) throws Exception {
