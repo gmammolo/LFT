@@ -276,10 +276,10 @@ public class DFA
     /**************PROBLEMI DI RAGGIUNGIBILITA'******************/
     
     
-    public HashSet<Integer> reach(Integer state)
+    protected HashSet<Integer> reach(Integer state)
     {
         if(!validState(state))
-            return null;
+            return new HashSet<Integer>();
 //        Metodo SUpport
 //        Support_Transitions arr_tmp = GenerateSupport();
 //        Boolean[] res = arr_tmp.reach(state, numberOfStates);
@@ -321,12 +321,13 @@ public class DFA
     
     /**
      *
-     * @return boolean  True se e solo se l’automa riconosce il linguaggio vuoto
+     * @return boolean  True se e solo se l’automa riconosce solo il linguaggio vuoto
      */
     public boolean empty()
     {
-        reach(0);
-        return false;
+        HashSet<Integer> l = reach(0);
+        return l.isEmpty() || (l.size() == 1 && l.contains(0));
+        
     }
     
     /**
@@ -352,5 +353,39 @@ public class DFA
     }
     
     
+    public String[] samples(Integer state)
+    {
+        if(!validState(state))
+            return null;
+        
+        String[] res = new String[numberOfStates];
+        for(int i=0; i< numberOfStates;i++)
+        {
+           res[i] = (state == i) ? "" : null;
+        }
+        boolean check=true;
+        while(check)
+        {
+            check=false;
+            for(int i=0; i< numberOfStates;i++)
+            {
+                for(Entry<Move, Integer> entry : transitions.entrySet()) {
+                    Move key = entry.getKey();
+                    Integer value = entry.getValue();
+
+                    if(res[key.start] != null && validState(value) && (res[value]==null ||  !res[value].contains(String.valueOf(key.ch))) )
+                    {
+                        check =true;
+                        if(res[value]==null) res[value]="";
+                        res[value]+=String.valueOf(key.ch);
+                    }
+
+                }
+            }
+        }
+        
+        return res;
+        
     
+    }
 }

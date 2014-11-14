@@ -31,7 +31,7 @@ public class Es2_5 {
         dfa.setMove(3, '1', 3);
         dfa.setMove(3, '0', 3);
         
-        dfa.setMove(4, '0', 5); //add test
+        dfa.setMove(3, '0', 5); //add test
         dfa.addFinalState(3);
         dfa.addFinalState(2); //add test
     }
@@ -51,11 +51,12 @@ public class Es2_5 {
     }
 
         
-    public static void empty()
+    public static void sink()
     {
         GenerateDFA();
         dfa.toDOT("esempio");
-        HashSet<Integer> t =dfa.reach(0);
+//        HashSet<Integer> t =dfa.sink();
+        String[] t= dfa.samples(0);
         
     }
         
@@ -66,7 +67,7 @@ public class Es2_5 {
 //        String line = reader.readLine();
 
 //        toJava("Es2_5");
-        empty();
+        sink();
     }
     
 }
