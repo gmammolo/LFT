@@ -353,7 +353,7 @@ public class DFA
     }
     
     
-    public String[] samples(Integer state)
+    public HashMap<Integer,String> samples(Integer state)
     {
         if(!validState(state))
             return null;
@@ -377,15 +377,22 @@ public class DFA
                     {
                         check =true;
                         if(res[value]==null) res[value]="";
-                        res[value]+=String.valueOf(key.ch);
+                        res[value]+=res[key.start]+String.valueOf(key.ch);
                     }
 
                 }
             }
         }
         
-        return res;
+        HashMap<Integer,String> result = new HashMap<>();
+        for(int i=0; i< res.length; i++)
+        {
+            if(finalState(i) && res[i]!=null)
+                result.put(i, res[i]);
+                
+        }
         
+        return result;
     
     }
 }

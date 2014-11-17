@@ -9,7 +9,9 @@ import LFT.DFA.DFA;
 import static LFT.Lab_17_10_2014.lft_es5.LFT_ES5B.GenerateDFA;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 
 /**
  *
@@ -56,7 +58,12 @@ public class Es2_5 {
         GenerateDFA();
         dfa.toDOT("esempio");
 //        HashSet<Integer> t =dfa.sink();
-        String[] t= dfa.samples(0);
+        HashMap<Integer,String> t= dfa.samples(0);
+        for(Entry<Integer, String> entry : t.entrySet()) {
+            Integer Key = entry.getKey();
+            String Value = entry.getValue();
+	    System.out.println("Una Possibile Stringa per raggiungere lo stato finale q"+Key + " e' "+ Value);
+        }
         
     }
         
