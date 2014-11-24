@@ -1,3 +1,4 @@
+//Ultima versione pdf: http://informatica.i-learn.unito.it/file.php/1001/esercizi_24_11_2014.pdf
 package LFT.DFA;
 
 import java.util.HashSet;
@@ -10,6 +11,13 @@ import java.util.Map.Entry;
  */
 public class DFA {
 
+    /**
+     * Usiamo il carattere nullo per rappresentare una epsilon transizione
+     */ 
+    
+      public static final char EPSILON = '\0';
+   
+     
     /**
      * Numero degli stati dell'automa. Ogni stato e` rappresentato da un numero
      * interno non negativo, lo stato con indice 0 e` lo stato iniziale.
@@ -423,44 +431,40 @@ public class DFA {
                 }
             }
         }
-        
+
         //5
-        
-        Integer[] m= new Integer[numberOfStates];
-        for(int i=0; i< numberOfStates; i++) {
+        Integer[] m = new Integer[numberOfStates];
+        for (int i = 0; i < numberOfStates; i++) {
             boolean find = false;
-            for(int j=0; j<numberOfStates && !find; j++) {
-                if(eq[i][j])
-                {
-                    find=true;
-                    m[i]=j;
+            for (int j = 0; j < numberOfStates && !find; j++) {
+                if (eq[i][j]) {
+                    find = true;
+                    m[i] = j;
                 }
             }
-            
+
         }
-        
+
         //6
-        int k=-1, tmp_state = -1;
-        for(int i= 0; i < m.length; i++)
-        {
-            if(m[i]!=null && m[i] > tmp_state)
-            {
+        int k = -1, tmp_state = -1;
+        for (int i = 0; i < m.length; i++) {
+            if (m[i] != null && m[i] > tmp_state) {
                 tmp_state = m[i];
-                k=i;
+                k = i;
             }
         }
-        DFA B = new DFA(k+1);
+        DFA B = new DFA(k + 1);
         for (Entry<Move, Integer> entry : transitions.entrySet()) {
-                    Move key = entry.getKey();
-                    Integer value = entry.getValue();
-                    if(m[key.start] != null && m[value]!= null)
-                    {
-                        B.setMove(m[key.start], key.ch, m[value]);
-                        if(finalState(key.start) && !B.finalState(key.start) )
-                            B.addFinalState(key.start);
-                    }
+            Move key = entry.getKey();
+            Integer value = entry.getValue();
+            if (m[key.start] != null && m[value] != null) {
+                B.setMove(m[key.start], key.ch, m[value]);
+                if (finalState(key.start) && !B.finalState(key.start)) {
+                    B.addFinalState(key.start);
+                }
+            }
         }
-        
+
         return B;
     }
 
