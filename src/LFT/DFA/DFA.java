@@ -11,11 +11,6 @@ import java.util.Map.Entry;
  */
 public class DFA {
 
-    /**
-     * Usiamo il carattere nullo per rappresentare una epsilon transizione
-     */ 
-    
-      public static final char EPSILON = '\0';
    
      
     /**
@@ -46,6 +41,21 @@ public class DFA {
         transitions = new HashMap<Move, Integer>();
     }
 
+    /**
+     * Aggiunge una transizione all' automa
+     * @param p stato di partenza della transizione
+     * @param ch simbolo che etichetta la transizione
+     * @param q stato di arrivo della transizione
+     * @return <code>true</code> se lo stato di partenza e lo stato di arrivo 
+     *          sono validi, <code>false</code> alltrimenti.
+     */
+    public boolean addMove( int p, char ch, int q) {
+        //non ho capito che ci devo implementare qui: sembra identico a setmove
+        //TODO: rivedere
+        return setMove(p, ch, q);
+    }
+    
+    
     /**
      * Aggiunge uno stato all'automa.
      *
@@ -120,6 +130,10 @@ public class DFA {
         return (p >= 0 && p < numberOfStates);
     }
 
+    
+    
+    
+    
     /**
      * Determina se uno stato e` finale oppure no.
      *
@@ -131,6 +145,8 @@ public class DFA {
     public boolean finalState(int p) {
         return finalStates.contains(p);
     }
+    
+    
 
     /**
      * Restituisce il numero di stati dell'automa.
@@ -184,6 +200,7 @@ public class DFA {
             return -1;
         }
     }
+    
 
     /**
      * Verifica se una stringa e` riconosciuta dall'automa.

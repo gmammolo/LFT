@@ -9,9 +9,9 @@ package LFT.DFA;
 public class Move
 {
     /** Lo stato di partenza. */
-    final int start;
+    public final int start;
     /** Il simbolo che etichetta la transizione. */
-    final char ch;
+    public final char ch;
 
     /**
      * Crea una mossa con stato di partenza e simbolo dati.
