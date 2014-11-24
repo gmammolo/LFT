@@ -429,7 +429,7 @@ public class DFA {
         Integer[] m= new Integer[numberOfStates];
         for(int i=0; i< numberOfStates; i++) {
             boolean find = false;
-            for(int j=0; j<numberOfStates || find; j++) {
+            for(int j=0; j<numberOfStates && !find; j++) {
                 if(eq[i][j])
                 {
                     find=true;
@@ -439,8 +439,29 @@ public class DFA {
             
         }
         
+        //6
+        int k=-1, tmp_state = -1;
+        for(int i= 0; i < m.length; i++)
+        {
+            if(m[i]!=null && m[i] > tmp_state)
+            {
+                tmp_state = m[i];
+                k=i;
+            }
+        }
+        DFA B = new DFA(k+1);
+        for (Entry<Move, Integer> entry : transitions.entrySet()) {
+                    Move key = entry.getKey();
+                    Integer value = entry.getValue();
+                    if(m[key.start] != null && m[value]!= null)
+                    {
+                        B.setMove(m[key.start], key.ch, m[value]);
+                        if(finalState(key.start) && !B.finalState(key.start) )
+                            B.addFinalState(key.start);
+                    }
+        }
         
-        return null;
+        return B;
     }
 
 }

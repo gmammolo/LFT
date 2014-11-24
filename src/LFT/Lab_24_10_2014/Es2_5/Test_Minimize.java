@@ -32,6 +32,7 @@ public class Test_Minimize{
     public static void main(String[] args) throws Exception {
         GenerateDFA();
         dfa.toDOT("esercizio");
-        dfa.minimize();
+        DFA B = dfa.minimize();
+        B.toDOT("secondo");
     }
 }
