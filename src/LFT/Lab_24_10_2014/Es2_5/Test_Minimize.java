@@ -33,6 +33,24 @@ public class Test_Minimize{
         GenerateDFA();
         dfa.toDOT("esercizio");
         DFA B = dfa.minimize();
+        B.setMove(3, '1', 1);
         B.toDOT("secondo");
+        
+        
+        System.out.println("#####################");
+        DFA C = new DFA(4);
+        C.setMove(0, '1', 0);
+        C.setMove(0, '0', 1);
+        C.setMove(1, '1', 0);
+        C.setMove(1, '0', 2);
+        C.setMove(2, '1', 0);
+        C.setMove(2, '0', 3);
+        C.setMove(3, '1', 3);
+        C.setMove(3, '0', 3);
+        
+        //dfa.setMove(3, '0', 5); //add test
+        C.addFinalState(3);
+        //dfa.addFinalState(2); //add test
+        System.out.println(dfa.equivalentTo(C));
     }
 }

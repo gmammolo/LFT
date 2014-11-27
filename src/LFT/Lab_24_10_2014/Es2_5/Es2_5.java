@@ -23,7 +23,7 @@ public class Es2_5 {
         
     public static void GenerateDFA()
     {
-        dfa = new DFA(6);
+        dfa = new DFA(4);
         dfa.setMove(0, '1', 0);
         dfa.setMove(0, '0', 1);
         dfa.setMove(1, '1', 0);
@@ -33,9 +33,9 @@ public class Es2_5 {
         dfa.setMove(3, '1', 3);
         dfa.setMove(3, '0', 3);
         
-        dfa.setMove(3, '0', 5); //add test
+        //dfa.setMove(3, '0', 5); //add test
         dfa.addFinalState(3);
-        dfa.addFinalState(2); //add test
+        //dfa.addFinalState(2); //add test
     }
     
     public static void toDot(String s) {

@@ -484,5 +484,14 @@ public class DFA {
 
         return B;
     }
+    
+    
+    public boolean equivalentTo(DFA dfa)
+    {
+        DFA minimize = this.minimize();
+        DFA minimize2 = dfa.minimize();
+        
+        return (minimize.numberOfStates == minimize2.numberOfStates && minimize.finalStates.equals(minimize2.finalStates) && minimize.transitions.equals(minimize2.transitions)  ); 
+    }
 
 }

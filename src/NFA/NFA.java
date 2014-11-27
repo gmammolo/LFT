@@ -1,3 +1,5 @@
+//Ultima versione pdf: http://informatica.i-learn.unito.it/file.php/1001/esercizi_24_11_2014.pdf
+
 package NFA;
 
 
@@ -201,6 +203,7 @@ public class NFA
      */
     public HashSet<Integer> epsilonClosure(HashSet<Integer> s) {
 	// IMPLEMENTARE
+        return null;
     }
 
     /**
@@ -213,6 +216,12 @@ public class NFA
      */    
     public HashSet<Integer> epsilonClosure(int p) {
 	// IMPLEMENTARE
+        boolean[] r = new boolean[numberOfStates];
+        
+        for(int i=0;i < r.length; i++)
+        {
+            r[i] = false;
+        }
     }
 
     /**
