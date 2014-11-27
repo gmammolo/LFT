@@ -7,6 +7,7 @@ import LFT.DFA.DFA;
 import LFT.DFA.Move;
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -203,7 +204,37 @@ public class NFA
      */
     public HashSet<Integer> epsilonClosure(HashSet<Integer> s) {
 	// IMPLEMENTARE
-        return null;
+        boolean[] r = new boolean[numberOfStates];
+        r[0]=true;
+        for(int i=1;i < r.length; i++)
+        {
+            r[i] = false;
+        }
+        boolean found;
+        do{
+             found= false;
+             for (Map.Entry<Move, HashSet<Integer>> entry : transitions.entrySet()) {
+                    Move key = entry.getKey();
+                    HashSet<Integer> values = entry.getValue();
+                    
+                    for(Integer arrivo : values)
+                    {
+                        if(validState(key.start) && validState(arrivo) && r[key.start])
+                        {
+                           r[arrivo]= found = true;              
+                        }
+                    }
+             }
+            
+        }while(found);
+        HashSet<Integer> result = new HashSet<>();
+        for(int i=0;i < r.length; i++)
+        {
+            if(r[i])
+                result.add(i);
+        }
+        
+        return result;
     }
 
     /**
@@ -215,13 +246,37 @@ public class NFA
      * @see #epsilonClosure
      */    
     public HashSet<Integer> epsilonClosure(int p) {
-	// IMPLEMENTARE
         boolean[] r = new boolean[numberOfStates];
-        
         for(int i=0;i < r.length; i++)
         {
-            r[i] = false;
+            r[i] = (i == p) ? true : false;
         }
+        boolean found;
+        do{
+             found= false;
+             for (Map.Entry<Move, HashSet<Integer>> entry : transitions.entrySet()) {
+                    Move key = entry.getKey();
+                    HashSet<Integer> values = entry.getValue();
+                    
+                    for(Integer arrivo : values)
+                    {
+                        if(validState(key.start) && validState(arrivo) && r[key.start])
+                        {
+                           r[arrivo]= found = true;              
+                        }
+                    }
+             }
+            
+        }while(found);
+        HashSet<Integer> result = new HashSet<>();
+        for(int i=0;i < r.length; i++)
+        {
+            if(r[i])
+                result.add(i);
+        }
+        
+        return result;
+
     }
 
     /**
