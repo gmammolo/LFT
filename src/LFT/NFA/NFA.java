@@ -1,6 +1,6 @@
 //Ultima versione pdf: http://informatica.i-learn.unito.it/file.php/1001/esercizi_24_11_2014.pdf
 
-package NFA;
+package LFT.NFA;
 
 
 import LFT.DFA.DFA;
@@ -8,6 +8,7 @@ import LFT.DFA.Move;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 /**
@@ -326,5 +327,29 @@ public class NFA
 		dfa.addFinalState(p);
 
     	return dfa;
+    }
+    
+    
+    public void ToDOT( String name )
+    {
+        String text = "digraph " + name + " {\n"
+                + "rankdir=LR;\n"
+                + "node [shape = doublecircle];\n";
+        for (Integer c : finalStates) {
+            text += " q" + c + "; ";
+        }
+        text += "\n node [shape = circle];\n";
+        for (Entry<Move, HashSet<Integer>> entry : transitions.entrySet()) {
+            for(Integer end : entry.getValue())
+            {
+                text += "q"+entry.getKey().start+" -> q"+end+"[label = \""+entry.getKey().ch+"\" ] \n";
+            }
+        }
+        
+        System.out.println(text);
+    }
+
+    public int append(NFA compile) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -228,9 +228,9 @@ public class DFA {
      */
     public void toDOT(String name) {
         // DA IMPLEMENTARE
-        String text = "digraph " + name + " {\n"
-                + "rankdir=LR;\n"
-                + "node [shape = doublecircle];\n";
+            String text = "digraph " + name + " {\n"
+                    + "rankdir=LR;\n"
+                    + "node [shape = doublecircle];\n";
         for (Integer c : finalStates) {
             text += " q" + c + "; ";
         }
