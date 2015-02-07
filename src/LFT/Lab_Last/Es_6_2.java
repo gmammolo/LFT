@@ -24,19 +24,21 @@ public class Es_6_2 {
                         new RegExpSymbol('/'),
                         new RegExpSymbol('*')  
                     ),
-                    new RegExpChoice(
-                            new RegExpChoice(
-                                    new RegExpStar( new RegExpSymbol('/')),
-                                    new RegExpStar( new RegExpSymbol('*'))
-                            ),
-                            new RegExpStar( new RegExpSymbol('c'))
+                    new RegExpStar(
+                        new RegExpChoice(
+                                new RegExpChoice(
+                                        new RegExpStar( new RegExpSymbol('/')),
+                                        new RegExpStar( new RegExpSymbol('*'))
+                                ),
+                                new RegExpStar( new RegExpSymbol('c'))
+                        )
                     )
                   ),
                 new RegExpSequence(
                     new RegExpSymbol('*'),
                     new RegExpSymbol('/')    
                 )    
-          ).compile().ToDOT("Esercizio");
+          ).compile().toDOT("Esercizio");
     }
     
 }
