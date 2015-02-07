@@ -14,7 +14,7 @@ import LFT.NFA.NFA;
 public class RegExpEpsilon  implements RegExp {
     private char ch;
     
-    RegExpEpsilon() {
+    public RegExpEpsilon() {
 	this.ch = NFA.EPSILON;
     }
 

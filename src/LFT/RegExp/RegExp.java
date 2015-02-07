@@ -12,5 +12,6 @@ import LFT.NFA.NFA;
  * @author Giuseppe
  */
 interface RegExp {
-    NFA compile();
+    public NFA compile();
+    
 }

@@ -11,8 +11,6 @@ import java.util.Map.Entry;
  */
 public class DFA {
 
-   
-     
     /**
      * Numero degli stati dell'automa. Ogni stato e` rappresentato da un numero
      * interno non negativo, lo stato con indice 0 e` lo stato iniziale.
@@ -43,19 +41,19 @@ public class DFA {
 
     /**
      * Aggiunge una transizione all' automa
+     *
      * @param p stato di partenza della transizione
      * @param ch simbolo che etichetta la transizione
      * @param q stato di arrivo della transizione
-     * @return <code>true</code> se lo stato di partenza e lo stato di arrivo 
-     *          sono validi, <code>false</code> alltrimenti.
+     * @return <code>true</code> se lo stato di partenza e lo stato di arrivo
+     * sono validi, <code>false</code> alltrimenti.
      */
-    public boolean addMove( int p, char ch, int q) {
+    public boolean addMove(int p, char ch, int q) {
         //non ho capito che ci devo implementare qui: sembra identico a setmove
         //TODO: rivedere
         return setMove(p, ch, q);
     }
-    
-    
+
     /**
      * Aggiunge uno stato all'automa.
      *
@@ -130,10 +128,6 @@ public class DFA {
         return (p >= 0 && p < numberOfStates);
     }
 
-    
-    
-    
-    
     /**
      * Determina se uno stato e` finale oppure no.
      *
@@ -145,8 +139,6 @@ public class DFA {
     public boolean finalState(int p) {
         return finalStates.contains(p);
     }
-    
-    
 
     /**
      * Restituisce il numero di stati dell'automa.
@@ -200,7 +192,6 @@ public class DFA {
             return -1;
         }
     }
-    
 
     /**
      * Verifica se una stringa e` riconosciuta dall'automa.
@@ -227,10 +218,26 @@ public class DFA {
      * @param name Nome dell'automa.
      */
     public void toDOT(String name) {
+// DA IMPLEMENTARE 2.5
+        String out = "digraph " + name + "{\n";
+        out += "rankdir=LR;\n";
+        out += "node [shape = doublecircle];\n";
+        for (Integer i : finalStates) {
+            out += "q" + i + ";\n";
+        }
+        out += "node [shape = circle];\n";
+        for (Move m : transitions.keySet()) {
+            out += "q" + m.start + " -> q" + transitions.get(m) + " [ label = \"" + m.ch + "\" ];\n";
+        }
+        out += "}";
+        System.out.println(out);
+    }
+
+    public void toDOTAlternative(String name) {
         // DA IMPLEMENTARE
-            String text = "digraph " + name + " {\n"
-                    + "rankdir=LR;\n"
-                    + "node [shape = doublecircle];\n";
+        String text = "digraph " + name + " {\n"
+                + "rankdir=LR;\n"
+                + "node [shape = doublecircle];\n";
         for (Integer c : finalStates) {
             text += " q" + c + "; ";
         }
@@ -439,7 +446,7 @@ public class DFA {
                         for (Entry<Move, Integer> entry : transitions.entrySet()) {
                             Move key = entry.getKey();
                             //Integer value = entry.getValue();
-                            if (validState(move(i, key.ch)) && validState(move(i, key.ch)) && !eq[move(i, key.ch)][move(j, key.ch)]) {
+                            if (validState(move(i, key.ch)) && validState(move(i, key.ch)) && move(i, key.ch)>=0 &&  move(j, key.ch)>=0 && !eq[move(i, key.ch)][move(j, key.ch)]) {
                                 check = true;
                                 eq[i][j] = false;
                             }
@@ -484,14 +491,12 @@ public class DFA {
 
         return B;
     }
-    
-    
-    public boolean equivalentTo(DFA dfa)
-    {
+
+    public boolean equivalentTo(DFA dfa) {
         DFA minimize = this.minimize();
         DFA minimize2 = dfa.minimize();
-        
-        return (minimize.numberOfStates == minimize2.numberOfStates && minimize.finalStates.equals(minimize2.finalStates) && minimize.transitions.equals(minimize2.transitions)  ); 
+
+        return (minimize.numberOfStates == minimize2.numberOfStates && minimize.finalStates.equals(minimize2.finalStates) && minimize.transitions.equals(minimize2.transitions));
     }
 
 }
