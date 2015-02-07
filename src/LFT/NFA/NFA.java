@@ -158,7 +158,7 @@ public class NFA {
     public HashSet<Character> alphabet() {
         HashSet<Character> alphabet = new HashSet<Character>();
         for (Move m : transitions.keySet()) {
-            alphabet.add(m.ch);
+           if(m.ch != NFA.EPSILON) alphabet.add(m.ch);
         }
         return alphabet;
     }
@@ -178,6 +178,7 @@ public class NFA {
         } else {
             return new HashSet<>();
         }
+
     }
 
     /**
@@ -212,7 +213,6 @@ public class NFA {
      * <code>s</code> per mezzo di zero o piu` epsilon transizioni.
      */
     public HashSet<Integer> epsilonClosure(HashSet<Integer> s) {
-        // IMPLEMENTARE
         boolean[] r = new boolean[numberOfStates];
         for (int i = 0; i < r.length; i++) {
             r[i] = s.contains(i);
@@ -266,23 +266,20 @@ public class NFA {
      * @return DFA equivalente.
      */
     public DFA dfa() {
-	// la costruzione del DFA utilizza due tabelle hash per tenere
-        // traccia della corrispondenza (biunivoca) tra insiemi di
-        // stati del NFA e stati del DFA
+        // la costruzione del DFA utilizza due tabelle hash per tenere
+// traccia della corrispondenza (biunivoca) tra insiemi di
+// stati del NFA e stati del DFA
         HashMap<HashSet<Integer>, Integer> indexOfSet
-                = new HashMap<HashSet<Integer>, Integer>();    // NFA -> DFA
+                = new HashMap<HashSet<Integer>, Integer>(); // NFA -> DFA
         HashMap<Integer, HashSet<Integer>> setOfIndex
-                = new HashMap<Integer, HashSet<Integer>>();    // DFA -> NFA
-
-        DFA dfa = new DFA(0);                            // il DFA
+                = new HashMap<Integer, HashSet<Integer>>(); // DFA -> NFA
+        DFA dfa = new DFA(0); // il DFA
         Stack<Integer> newStates = new Stack<Integer>(); // nuovi stati del DFA
         HashSet<Character> alphabet = alphabet();
-
-        int q0 = dfa.newState();               // stato iniziale del DFA
+        int q0 = dfa.newState(); // stato iniziale del DFA
         indexOfSet.put(epsilonClosure(0), q0); // stati dell'NFA corrisp. a q0
         setOfIndex.put(q0, epsilonClosure(0));
-        newStates.push(q0);                    // nuovo stato da esplorare
-
+        newStates.push(q0); // nuovo stato da esplorare
         while (!newStates.empty()) { // finche' ci sono nuovi stati da visitare
             final int p = newStates.pop(); // ne considero uno e lo visito
             final HashSet<Integer> pset = setOfIndex.get(p); // stati del NFA corrisp.
@@ -290,25 +287,24 @@ public class NFA {
                 HashSet<Integer> qset = epsilonClosure(move(pset, ch));
                 if (indexOfSet.containsKey(qset)) { // se qset non e` nuovo...
                     final int q = indexOfSet.get(qset); // recupero il suo indice
-                    dfa.setMove(p, ch, q);          // aggiungo la transizione
-                } else {                            // se invece qset e` nuovo
-                    final int q = dfa.newState();   // creo lo stato nel DFA
-                    indexOfSet.put(qset, q);        // aggiorno la corrispondenza
+                    dfa.setMove(p, ch, q); // aggiungo la transizione
+                } else { // se invece qset e` nuovo
+                    final int q = dfa.newState(); // creo lo stato nel DFA
+                    indexOfSet.put(qset, q); // aggiorno la corrispondenza
                     setOfIndex.put(q, qset);
-                    newStates.push(q);              // q e` da visitare
-                    dfa.setMove(p, ch, q);          // aggiungo la transizione
+                    newStates.push(q); // q e` da visitare
+                    dfa.setMove(p, ch, q); // aggiungo la transizione
                 }
             }
         }
-
-        // stabilisco gli stati finali del DFA
+// stabilisco gli stati finali del DFA
         for (int p = 0; p < dfa.numberOfStates(); p++) {
             if (finalState(setOfIndex.get(p))) {
                 dfa.addFinalState(p);
             }
         }
-
         return dfa;
+
     }
 
     public void ToDOT(String name) {

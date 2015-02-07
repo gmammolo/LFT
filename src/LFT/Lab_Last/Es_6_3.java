@@ -5,22 +5,21 @@
  */
 package LFT.Lab_Last;
 
-import LFT.NFA.NFA;
-import LFT.RegExp.*;
+import LFT.RegExp.RegExpChoice;
+import LFT.RegExp.RegExpStar;
+import LFT.RegExp.RegExpSymbol;
 
 /**
  *
  * @author Giuseppe
  */
-public class Esercizio {
+public class Es_6_3 {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//       new RegExpChoice(new RegExpSymbol('a'),new RegExpSymbol('b')).compile().toDOT("es");
-        new RegExpStar(new RegExpChoice(new RegExpSymbol('a'), new RegExpSymbol('b'))).compile().toDOT("Esercizio");
-        
+         new RegExpStar(new RegExpChoice(new RegExpSymbol('a'), new RegExpSymbol('b'))).compile().dfa().minimize().toDOT("esercizio");
     }
     
 }
