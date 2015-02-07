@@ -15,7 +15,7 @@ public class RegExpSequence implements RegExp {
     private RegExp e1;
     private RegExp e2;
 
-    RegExpSequence(RegExp e1, RegExp e2) {
+    public RegExpSequence(RegExp e1, RegExp e2) {
 	this.e1 = e1;
 	this.e2 = e2;
     }

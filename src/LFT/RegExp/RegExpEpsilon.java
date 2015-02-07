@@ -11,11 +11,11 @@ import LFT.NFA.NFA;
  *
  * @author Giuseppe
  */
-public class RegExpSymbol implements RegExp {
+public class RegExpEpsilon  implements RegExp {
     private char ch;
-
-    public RegExpSymbol(char ch) {
-	this.ch = ch;
+    
+    RegExpEpsilon() {
+	this.ch = NFA.EPSILON;
     }
 
     public NFA compile() {

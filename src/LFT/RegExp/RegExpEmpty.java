@@ -11,18 +11,14 @@ import LFT.NFA.NFA;
  *
  * @author Giuseppe
  */
-public class RegExpSymbol implements RegExp {
-    private char ch;
+public class RegExpEmpty implements RegExp {
 
-    public RegExpSymbol(char ch) {
-	this.ch = ch;
+    public RegExpEmpty() {
     }
 
+    @Override
     public NFA compile() {
-	NFA a = new NFA(2);
-	a.addMove(0, ch, 1);
-	a.addFinalState(1);
-	return a;
+        NFA a = new NFA(0);
+        return a;
     }
 }
-
