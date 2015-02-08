@@ -35,7 +35,7 @@ public class Es_6_4 {
                     )
                ) , 
                new RegExpStar(new RegExpRange('1', '9'))
-        ).compile().dfa().minimize().minimize().toDOTAlternative("64");
+        ).compile().dfa().minimize().toDOTAlternative("64");
     
     }
 }
