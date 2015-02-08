@@ -198,37 +198,41 @@ public class Support_Transitions {
         }
         
         /**
-         * ordina il label
+         * Riscrive il label con la sintassi che verrà stampata
+         * es. 1-9,a ,d
+         * @return La stringa trascritta
          */
-        public void Ordina(){
-            
+        private String Trascrivi(){
+            String text="";
+            for(int i=0; i<label.size();i++)
+            {
+                text+=label.get(i);
+                int j=i+1;
+                if( j<label.size())
+                {
+                    if(label.get(j)==label.get(i)+1)
+                    {
+                        text+="-";
+                        while(j<label.size() && label.get(j)==label.get(i+1))
+                        {
+                            j++;i++;
+                        }
+                        text+=label.get(i);
+                    }
+                    else
+                    {
+                      text+=",";
+                    }
+                }
+            }
+             return  text;   
         }
         
         public String toDot()
         {
-            String s ="";
+            
             Collections.sort(label);
-            if(label.size()>0)
-            {
-                char old = label.get(0);
-                s = old+"";
-                for(Character c : label)
-                {
-                    if( old+1 == c)
-                    {
-                        if( s.charAt(s.length()-1)!= '-' )
-                            s+="-";
-                    }
-                    else if(old != c && s.charAt(s.length()-1)!= old )
-                    {
-                        s+=old+","+c;
-                    }
-                    old=c;
-                }
-                if(s.charAt(s.length()-1)!= old)
-                    s+=old;
-                
-            }
+            String s =Trascrivi();
             return "q"+this.start+" -> q"+end+" [ label = \""+s+"\" ] \n";
         }
         
