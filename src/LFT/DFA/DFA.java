@@ -3,6 +3,7 @@ package LFT.DFA;
 
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
@@ -477,33 +478,20 @@ public class DFA {
                 k = i;
             }
         }
+        HashSet<Integer> sink = sink();
         DFA B = new DFA(k + 1);
         for (Entry<Move, Integer> entry : transitions.entrySet()) {
             Move key = entry.getKey();
             Integer value = entry.getValue();
-            if (m[key.start] != null && m[value] != null) {
+            if (m[key.start] != null && m[value] != null && !sink.contains(m[value]) ) {              
                 B.setMove(m[key.start], key.ch, m[value]);
-                if (finalState(key.start) && !B.finalState(key.start)) {
-                    B.addFinalState(key.start);
+                if ( finalState(m[key.start]) && !B.finalState(m[key.start])) {
+                    B.addFinalState(m[key.start]);
                 }
             }
         }
-
         
-        //UPDATE: Eliminazione stati non raggiungibili e stati che non terminano
-        HashSet<Integer> reper = B.reach(0); //stati raggiungibili da 0
-        DFA C= new DFA(reper.size());
-        for (Entry<Move, Integer> entry : transitions.entrySet()) {
-            Move key = entry.getKey();
-            Integer value = entry.getValue();
-            if(reper.contains(key.start)) 
-               C.setMove(key.start, key.ch, value);
-        }
-        for(Integer fin :  B.finalStates)
-            if(reper.contains(fin))
-                C.addFinalState(fin);
-        
-        return C;
+        return B;
     }
 
     public boolean equivalentTo(DFA dfa) {
@@ -512,5 +500,6 @@ public class DFA {
 
         return (minimize.numberOfStates == minimize2.numberOfStates && minimize.finalStates.equals(minimize2.finalStates) && minimize.transitions.equals(minimize2.transitions));
     }
+
 
 }
