@@ -489,7 +489,21 @@ public class DFA {
             }
         }
 
-        return B;
+        
+        //UPDATE: Eliminazione stati non raggiungibili e stati che non terminano
+        HashSet<Integer> reper = B.reach(0); //stati raggiungibili da 0
+        DFA C= new DFA(reper.size());
+        for (Entry<Move, Integer> entry : transitions.entrySet()) {
+            Move key = entry.getKey();
+            Integer value = entry.getValue();
+            if(reper.contains(key.start)) 
+               C.setMove(key.start, key.ch, value);
+        }
+        for(Integer fin :  B.finalStates)
+            if(reper.contains(fin))
+                C.addFinalState(fin);
+        
+        return C;
     }
 
     public boolean equivalentTo(DFA dfa) {
