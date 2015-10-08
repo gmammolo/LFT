@@ -18,7 +18,9 @@ public class Es_6_1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new RegExpStar(new RegExpChoice(new RegExpSymbol('a'), new RegExpSymbol('b'))).compile().toDOT("Esercizio");
+        new RegExpStar(new RegExpChoice(new RegExpSymbol('a'), new RegExpSymbol('b'))).compile().ToDOT("Esercizio");
+        
+        //new RegExpStar(new RegExpChoice(new RegExpSymbol('a'), new RegExpSymbol('b'))).compile().lineToDOT("Esercizio");
         
     }
     

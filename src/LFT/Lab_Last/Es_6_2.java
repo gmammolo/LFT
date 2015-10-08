@@ -38,7 +38,7 @@ public class Es_6_2 {
                     new RegExpSymbol('*'),
                     new RegExpSymbol('/')    
                 )    
-          ).compile().toDOT("Esercizio");
+          ).compile().ToDOT("Esercizio");
     }
     
 }

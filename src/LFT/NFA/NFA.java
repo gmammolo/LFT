@@ -158,7 +158,9 @@ public class NFA {
     public HashSet<Character> alphabet() {
         HashSet<Character> alphabet = new HashSet<Character>();
         for (Move m : transitions.keySet()) {
-           if(m.ch != NFA.EPSILON) alphabet.add(m.ch);
+            if (m.ch != NFA.EPSILON) {
+                alphabet.add(m.ch);
+            }
         }
         return alphabet;
     }
@@ -335,7 +337,7 @@ public class NFA {
         return n;
     }
 
-    public void toDOT(String name) {
+    protected void toDOT(String name) {
         String out = "digraph " + name + "{\n";
         out += "rankdir=LR;\n";
         out += "node [shape = doublecircle];\n";

@@ -1,10 +1,15 @@
 //Ultima versione pdf: http://informatica.i-learn.unito.it/file.php/1001/esercizi_24_11_2014.pdf
 package LFT.DFA;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Un oggetto della classe DFA rappresenta un automa a stati finiti
@@ -286,14 +291,7 @@ public class DFA {
                 + "\t\twhile(state >= 0 && i < s.length()) {\n"
                 + "\t\tfinal char ch = s.charAt(i++);\n"
                 + "\t\tswitch(state) {\n";
-//        Support_Transitions arr_tmp = new Support_Transitions();
-//        for(Entry<Move, Integer> entry : transitions.entrySet()) {
-//            Move key = entry.getKey();
-//            Integer value = entry.getValue();
-//            
-//            arr_tmp.AddTransiction(key.start, key.ch, value);
-////            s+="\t\t\tcase "+String.valueOf(key.start)+" : \n";  
-//        }
+
         Support_Transitions arr_tmp = GenerateSupport();
         s += arr_tmp.toJava();
         s += "\t\t\t}\n\t\t}\n";
@@ -311,6 +309,7 @@ public class DFA {
                 + "}\n";
 
         System.out.println(s);
+
     }
 
     /**
@@ -447,7 +446,7 @@ public class DFA {
                         for (Entry<Move, Integer> entry : transitions.entrySet()) {
                             Move key = entry.getKey();
                             //Integer value = entry.getValue();
-                            if (validState(move(i, key.ch)) && validState(move(i, key.ch)) && move(i, key.ch)>=0 &&  move(j, key.ch)>=0 && !eq[move(i, key.ch)][move(j, key.ch)]) {
+                            if (validState(move(i, key.ch)) && validState(move(i, key.ch)) && move(i, key.ch) >= 0 && move(j, key.ch) >= 0 && !eq[move(i, key.ch)][move(j, key.ch)]) {
                                 check = true;
                                 eq[i][j] = false;
                             }
@@ -483,14 +482,14 @@ public class DFA {
         for (Entry<Move, Integer> entry : transitions.entrySet()) {
             Move key = entry.getKey();
             Integer value = entry.getValue();
-            if (m[key.start] != null && m[value] != null && !sink.contains(m[value]) ) {              
+            if (m[key.start] != null && m[value] != null && !sink.contains(m[value])) {
                 B.setMove(m[key.start], key.ch, m[value]);
-                if ( finalState(m[key.start]) && !B.finalState(m[key.start])) {
+                if (finalState(m[key.start]) && !B.finalState(m[key.start])) {
                     B.addFinalState(m[key.start]);
                 }
             }
         }
-        
+
         return B;
     }
 
@@ -500,6 +499,5 @@ public class DFA {
 
         return (minimize.numberOfStates == minimize2.numberOfStates && minimize.finalStates.equals(minimize2.finalStates) && minimize.transitions.equals(minimize2.transitions));
     }
-
 
 }

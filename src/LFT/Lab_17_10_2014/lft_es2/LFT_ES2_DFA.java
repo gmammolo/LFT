@@ -23,6 +23,7 @@ public class LFT_ES2_DFA {
     public static boolean scan(String s)
     {
         dfa= new DFA(7);
+        
         return false;
         
     }
