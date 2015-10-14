@@ -9,7 +9,7 @@ package LFT.A2015.Es1;
  *
  * @author Giuseppe
  */
-public class Comma3_Code {
+public class Comma5_Code {
 	public static boolean scan(String s)
 	{
 		int state = 0;

@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
  *
  * @author Giuseppe
  */
-public class Comma3 extends DFAModel {
+public class Comma5 extends DFAModel {
 
     @Override
     protected int NumState() {
@@ -34,9 +34,9 @@ public class Comma3 extends DFAModel {
 
     public static void main(String[] args) throws Exception {
 
-        Comma3 es = new Comma3();
-        es.toJava("Comma3_Code");
-        es.toDotAlternative("Comma3_Dot");
+        Comma5 es = new Comma5();
+        es.toJava("Comma5_Code");
+        es.toDotAlternative("Comma5_Dot");
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(inputStreamReader);
         System.out.println("Type the line:");
