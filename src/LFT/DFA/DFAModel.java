@@ -102,6 +102,10 @@ public abstract class DFAModel {
    public void toDot(String s) {
         dfa.toDOT(s);
     }
+   
+      public void toDotAlternative(String s) {
+        dfa.toDOTAlternative(s);
+    }
     
    /**
     * Stampa a video il codice del dfa
