@@ -32,6 +32,18 @@ public abstract class DFAModel {
         InitializeDFA();
     }
     
+    
+    protected void SetMove(Integer p, Gen g, Integer q)
+    {
+        if(g.val.length > 0) {
+             SetMove(p, g.val, q);
+        }
+        else
+            SetMove(p, g.start, g.end, q);
+    }
+    
+    
+    
     /**
      * Imposta una move da uno stato p ad uno stato q dovuta a un carattere ch
      * @param p stato iniziale  
