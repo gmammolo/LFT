@@ -12,6 +12,11 @@ package LFT.DFA;
 public abstract class DFAModel {
     private DFA dfa;
   
+    
+    
+    public DFAModel() {
+        GenerateDFA();
+    }
     /**
      * Inizializza un DFA: in questo metodo andranno messi i
      * SetMove e AddFinalState
@@ -110,4 +115,8 @@ public abstract class DFAModel {
         dfa.toJava(s);
     }
         
+    
+    public boolean Scan(String line){
+        return dfa.scan(line);
+    }
 }
