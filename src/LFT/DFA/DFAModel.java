@@ -100,8 +100,6 @@ public abstract class DFAModel {
      * @param s 
      */
    public void toDot(String s) {
-        
-        GenerateDFA();
         dfa.toDOT(s);
     }
     
@@ -109,9 +107,7 @@ public abstract class DFAModel {
     * Stampa a video il codice del dfa
     * @param s nome della classe java
     */
-    public void toJava(String s) {
-        
-        GenerateDFA();
+    public void toJava(String s) {      
         dfa.toJava(s);
     }
         

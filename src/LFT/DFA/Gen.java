@@ -23,6 +23,7 @@ public class Gen {
     public Gen(char start, char end) {
         this.start = start;
         this.end = end;
+        val= new char[0];
     }
     
     public static Gen getDigits() {

@@ -81,9 +81,10 @@ public class DFA {
      */
     public boolean setMove(int p, char start, char end, int q) {
         boolean check = true;
+        if(start > end) throw new IllegalArgumentException("start non può essere minore di end");
         char ch = start;
         while (ch <= end) {
-            check = setMove(p, ch, q);
+            check = setMove(p, ch++, q);
         }
         return check;
     }
