@@ -15,6 +15,7 @@ q3 -> q5 [ label = "0-9" ]
 q4 -> q7 [ label = "0-9" ] 
 q5 -> q5 [ label = "0-9" ] 
 q6 -> q7 [ label = "0-9" ] 
+q7 -> q7 [ label = "0-9" ] 
 q5 -> q4 [ label = "e" ] 
 q1 -> q4 [ label = "e" ] 
 

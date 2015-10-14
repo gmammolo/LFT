@@ -44,6 +44,8 @@ public class Comma3 extends DFAModel{
         
         SetMove(6, Gen.getDigits(), 7);
         
+        SetMove(7, Gen.getDigits() , 7);
+        
         
         AddFinalState(1);
         AddFinalState(5);

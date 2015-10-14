@@ -73,6 +73,12 @@ public class Comma3_Code {
 				else 
  					state = -1; 
  				break;
+			case 7:
+				if(ch == '7' || ch == '6' || ch == '5' || ch == '4' || ch == '3' || ch == '2' || ch == '1' || ch == '0' || ch == '9' || ch == '8' ) 
+					state = 7;
+				else 
+ 					state = -1; 
+ 				break;
 			}
 		}
 		return state == 1 && state == 5 && state == 7;
