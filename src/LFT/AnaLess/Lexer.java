@@ -138,14 +138,15 @@ public class Lexer {
                     if (words.get(s) != null) {
                         return words.get(s);
                     } else {
-                        return words.put(s, new Word(Tag.ID, s));
+                        words.put(s, new Word(Tag.ID, s));
+                        return  words.get(s);
                     }
                     //Gestione not
                 } else if (Character.isDigit(peek)) {
                     Integer i = peek - 48;
                      readch();
                     while (Character.isDigit(peek)) {
-                        i += i*10 +( peek - 48);
+                        i = i*10 +( peek - 48);
                         readch();
                     } 
                     return new Number(i);
@@ -160,12 +161,13 @@ public class Lexer {
 
     }
     
-//    public static void main(String[] args) {
-////        Token n = new Lexer().lexical_scan();
-////        n.toString();
-//        char n = '2';
-//        char m= '5';
-//        int value = (n-48)+(m-48);
-//        System.out.println(value);
-//    }
+    /**
+     * SOlo per test di parole di singole (inserite manualmente durante l'esecuzione)
+     * @param args 
+     */
+    public static void main(String[] args) {
+        Token n = new Lexer().lexical_scan();
+        n.toString();
+
+    }
 }
