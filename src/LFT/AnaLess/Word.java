@@ -30,5 +30,13 @@ public class Word extends Token {
             ne = new Word(Tag.NE, "<>"),
             ge = new Word(Tag.GE, ">="),
             not = new Word(Tag.NOT, "not"),
-            assign = new Word(Tag.ASSIGN, ":=");
+            assign = new Word(Tag.ASSIGN, ":="),
+            If = new Word(Tag.IF, "if"),
+            Then = new Word(Tag.THEN, "then"),
+            Else = new Word(Tag.ELSE, "else"),
+            While = new Word(Tag.WHILE, "while"),
+            Do = new Word(Tag.DO, "do"),
+            Begin = new Word(Tag.BEGIN, "begin"),
+            End = new Word(Tag.END, "end");
+            
 }

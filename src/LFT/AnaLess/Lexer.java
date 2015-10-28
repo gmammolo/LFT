@@ -5,6 +5,8 @@
  */
 package LFT.AnaLess;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
 
@@ -13,6 +15,7 @@ import java.util.Hashtable;
  * @author Giuseppe
  */
 public class Lexer {
+
     public static int line = 1;
     private char peek = ' ';
     Hashtable<String, Word> words = new Hashtable();
@@ -29,8 +32,7 @@ public class Lexer {
         reserve(new Word(Tag.TRUE, "true"));
         reserve(new Word(Tag.FALSE, "false"));
         reserve(new Word(Tag.PRINT, "print"));
-        
-        
+
     }
 
     private void readch() {
@@ -129,26 +131,37 @@ public class Lexer {
                     return Token.colon;
                 }
             default:
-                if (Character.isLetter(peek)) {
+                if (Character.isLetter(peek) || peek == '_') {
                     String s = "";
+                    if(peek == '_') {
+                        do  {
+                           s += peek;
+                           readch();
+                        }while(peek == '_');
+                        if(!Character.isDigit(peek) && !Character.isLetter(peek)){
+                            System.err.println("Erroneous variable name or illegar string " + peek);
+                            return null;
+                        }
+                            
+                    }
                     do {
                         s += peek;
                         readch();
-                    } while (Character.isDigit(peek) || Character.isLetter(peek));
+                    } while (Character.isDigit(peek) || Character.isLetter(peek) || peek == '_');
                     if (words.get(s) != null) {
                         return words.get(s);
                     } else {
                         words.put(s, new Word(Tag.ID, s));
-                        return  words.get(s);
+                        return words.get(s);
                     }
                     //Gestione not
                 } else if (Character.isDigit(peek)) {
                     Integer i = peek - 48;
-                     readch();
+                    readch();
                     while (Character.isDigit(peek)) {
-                        i = i*10 +( peek - 48);
+                        i = i * 10 + (peek - 48);
                         readch();
-                    } 
+                    }
                     return new Number(i);
                 } else if (peek == '$') {
                     return new Token(Tag.EOF);
@@ -160,14 +173,29 @@ public class Lexer {
         }
 
     }
-    
-    /**
-     * SOlo per test di parole di singole (inserite manualmente durante l'esecuzione)
-     * @param args 
-     */
-    public static void main(String[] args) {
-        Token n = new Lexer().lexical_scan();
-        n.toString();
 
+    public static void main(String[] args) {
+        Lexer lex = new Lexer();
+        Token tok;
+        do {
+            tok = lex.lexical_scan();
+            System.out.println("Scan: " + tok);
+        } while (tok.tag != Tag.EOF);
     }
+
+//    public static void main(String[] args) {
+//        Lexer lex = new Lexer();
+//        String path = "...path...";
+//        try {
+//            BufferedReader br = new BufferedReader( new FileReader(path));
+//            Token tok;
+//            do {
+//                tok = lex.lexical_scan(br);
+//                System.out.println("Scan: " + tok);
+//            } while (tok.tag != Tag.EOF);
+//            br.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
