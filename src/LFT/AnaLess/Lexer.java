@@ -6,6 +6,7 @@
 package LFT.AnaLess;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -35,21 +36,21 @@ public class Lexer {
 
     }
 
-    private void readch() {
-        try {
-            peek = (char) System.in.read();
-        } catch (IOException exc) {
-            peek = (char) -1; //ERROR
-        }
 
+    private void readch(BufferedReader br) {
+        try {
+            peek = (char) br.read();
+        } catch (IOException exc) {
+            peek = (char) -1;
+        }
     }
 
-    public Token lexical_scan() {
+    public Token lexical_scan(BufferedReader br) {
         while (peek == ' ' || peek == '\t' || peek == '\n' || peek == '\r') {
             if (peek == '\n') {
                 line++;
             }
-            readch();
+            readch(br);
         }
         switch (peek) {
             case ',':
@@ -77,7 +78,7 @@ public class Lexer {
                 peek = ' ';
                 return Token.comma;
             case '&':
-                readch();
+                readch(br);
                 if (peek == '&') {
                     peek = ' ';
                     return Word.and;
@@ -86,7 +87,7 @@ public class Lexer {
                     return null;
                 }
             case '|':
-                readch();
+                readch(br);
                 if (peek == '|') {
                     peek = ' ';
                     return Word.or;
@@ -95,7 +96,7 @@ public class Lexer {
                     return null;
                 }
             case '=':
-                readch();
+                readch(br);
                 if (peek == '=') {
                     peek = ' ';
                     return Word.eq;
@@ -104,7 +105,7 @@ public class Lexer {
                     return null;
                 }
             case '<':
-                readch();
+                readch(br);
                 if (peek == '=') {
                     peek = ' ';
                     return Word.le;
@@ -115,7 +116,7 @@ public class Lexer {
                     return Token.lt;
                 }
             case '>':
-                readch();
+                readch(br);
                 if (peek == '=') {
                     peek = ' ';
                     return Word.ge;
@@ -123,7 +124,7 @@ public class Lexer {
                     return Token.gt;
                 }
             case ':':
-                readch();
+                readch(br);
                 if (peek == '=') {
                     peek = ' ';
                     return Word.assign;
@@ -133,20 +134,20 @@ public class Lexer {
             default:
                 if (Character.isLetter(peek) || peek == '_') {
                     String s = "";
-                    if(peek == '_') {
-                        do  {
-                           s += peek;
-                           readch();
-                        }while(peek == '_');
-                        if(!Character.isDigit(peek) && !Character.isLetter(peek)){
+                    if (peek == '_') {
+                        do {
+                            s += peek;
+                            readch(br);
+                        } while (peek == '_');
+                        if (!Character.isDigit(peek) && !Character.isLetter(peek)) {
                             System.err.println("Erroneous variable name or illegar string " + peek);
                             return null;
                         }
-                            
+
                     }
                     do {
                         s += peek;
-                        readch();
+                        readch(br);
                     } while (Character.isDigit(peek) || Character.isLetter(peek) || peek == '_');
                     if (words.get(s) != null) {
                         return words.get(s);
@@ -157,13 +158,13 @@ public class Lexer {
                     //Gestione not
                 } else if (Character.isDigit(peek)) {
                     Integer i = peek - 48;
-                    readch();
+                    readch(br);
                     while (Character.isDigit(peek)) {
                         i = i * 10 + (peek - 48);
-                        readch();
+                        readch(br);
                     }
                     return new Number(i);
-                } else if (peek == '$') {
+                } else if (peek == '$' || peek == (char)-1) {
                     return new Token(Tag.EOF);
                 } else {
                     System.err.println("Erroneous character: "
@@ -174,28 +175,21 @@ public class Lexer {
 
     }
 
+
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        Token tok;
-        do {
-            tok = lex.lexical_scan();
-            System.out.println("Scan: " + tok);
-        } while (tok.tag != Tag.EOF);
+        //String path = "C:\\Users\\Giuseppe\\Documents\\NetBeansProjects\\LFT\\src\\LFT\\AnaLess\\source.txt";
+        String path = new File("src/LFT/AnaLess/source.txt").getAbsolutePath();
+        try {
+            BufferedReader br = new BufferedReader( new FileReader(path));
+            Token tok;
+            do {
+                tok = lex.lexical_scan(br);
+                System.out.println("Scan: " + tok);
+            } while (tok.tag != Tag.EOF);
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-//    public static void main(String[] args) {
-//        Lexer lex = new Lexer();
-//        String path = "...path...";
-//        try {
-//            BufferedReader br = new BufferedReader( new FileReader(path));
-//            Token tok;
-//            do {
-//                tok = lex.lexical_scan(br);
-//                System.out.println("Scan: " + tok);
-//            } while (tok.tag != Tag.EOF);
-//            br.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

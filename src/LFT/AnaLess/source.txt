@@ -1,0 +1,2 @@
+var id := pippo;
+__pluto := 5;
