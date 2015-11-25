@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LFT.AnaSint;
+package LFT.Validatore;
 
+import LFT.AnaLess.Number;
 import LFT.AnaLess.Lexer;
 import LFT.AnaLess.Tag;
 import LFT.AnaLess.Token;
 import java.io.*;
 
-public class Parser {
+public class Valutatore {
 
     private Lexer lex;
-    private BufferedReader pbr;
     private Token look;
+    private BufferedReader pbr;
 
-    public Parser(Lexer l, BufferedReader br) {
+    public Valutatore(Lexer l, BufferedReader br) {
         lex = l;
         pbr = br;
         move();
@@ -42,88 +43,120 @@ public class Parser {
     }
 
     public void start() {
-        expr();
+        int expr_val = 0;
+        expr_val = expr();
         match(Tag.EOF);
+        System.out.println(expr_val);
     }
+////la procedura
+//    start puo
+//    ‘
+// essere estesa //
+//    come in
+//    Esercizio
+//    3.1
+// (
+//opzionale
+//
+//    )
 
-    private void expr() {
-        term();
-        exprp();
+    private int expr() {
+        int term_val, exprp_val;
+        term_val = term();
+        exprp_val = exprp(term_val);
+        return exprp_val;
     }
+////
+//    la procedura
+//    expr puo
+//    ‘
+// essere estesa //
+//    come in
+//    Esercizio
+//    3.1
+// (
+//opzionale
+//
+//    )
 
-    private void exprp() {
+    private int exprp(int exprp_i) {
+        int term_val, exprp_val = 0;
         switch (look.tag) {
             case '+':
                 match('+');
-                term();
-                exprp();
+                term_val = term();
+                exprp_val = exprp(exprp_i + term_val);
                 break;
             case '-':
                 match('-');
-                term();
-                exprp();
+                term_val = term();
+                exprp_val = exprp(exprp_i - term_val);
                 break;
             case ')':
             case Tag.EOF:
+                exprp_val= exprp_i;
                 break;
             default:
                 error("Syntax error in exprp "+ look.tag);
                 break;
         }
+        return exprp_val;
     }
 
-    private void term() {
-        fact();
-        termp();
+    private int term() {
+        return termp(fact());
     }
 
-    private void termp() {
+    private int termp(int termp_i) {
+        int fact_val, termp_val = 0;
         switch (look.tag) {
             case '*':
                 match('*');
-                fact();
-                termp();
+                fact_val = fact();
+                termp_val = termp(termp_i * fact_val);
                 break;
             case '/':
                 match('/');
-                fact();
-                termp();
+                fact_val = fact();
+                termp_val =termp(termp_i / fact_val);
                 break;
-            //epsileon? 
             case '+':
             case '-':
             case ')':
             case Tag.EOF:
+                termp_val = termp_i;
                 break;
             default:
                 error("Syntax error in termp "+ (look.tag));
                 break;
         }
-
+        return termp_val;
     }
 
-    private void fact() {
+    private int fact() {
+        int fact_val = 0;
         switch (look.tag) {
             case Tag.NUM:
-                match(look.tag);
+                fact_val = ((Number)look).value;
                 break;
             case '(':
                 match('(');
-                expr();
+                fact_val= expr();
                 match(')');
                 break;
             default:
-                expr();
-                break;               
+                fact_val = expr();
+                break;  
         }
+        return fact_val;
     }
-
+    
     public static void main(String[] args) {
         Lexer lex = new Lexer();
         String path = new File("src/LFT/AnaSint/source.txt").getAbsolutePath();
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
-            Parser parser = new Parser(lex, br);
+            Valutatore parser = new Valutatore(lex, br);
             parser.start();
             br.close();
         } catch (IOException e) {
