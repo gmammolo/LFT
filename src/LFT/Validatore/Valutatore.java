@@ -48,17 +48,6 @@ public class Valutatore {
         match(Tag.EOF);
         System.out.println(expr_val);
     }
-////la procedura
-//    start puo
-//    ‘
-// essere estesa //
-//    come in
-//    Esercizio
-//    3.1
-// (
-//opzionale
-//
-//    )
 
     private int expr() {
         int term_val, exprp_val;
@@ -66,18 +55,6 @@ public class Valutatore {
         exprp_val = exprp(term_val);
         return exprp_val;
     }
-////
-//    la procedura
-//    expr puo
-//    ‘
-// essere estesa //
-//    come in
-//    Esercizio
-//    3.1
-// (
-//opzionale
-//
-//    )
 
     private int exprp(int exprp_i) {
         int term_val, exprp_val = 0;
@@ -156,7 +133,7 @@ public class Valutatore {
     
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = new File("src/LFT/AnaSint/source.txt").getAbsolutePath();
+        String path = new File("src/LFT/Validatore/source.txt").getAbsolutePath();
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Valutatore parser = new Valutatore(lex, br);
