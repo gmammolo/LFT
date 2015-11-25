@@ -73,10 +73,10 @@ public class Lexer {
                 return Token.minus;
             case '*':
                 peek = ' ';
-                return Token.div;
+                return Token.mult;
             case '/':
                 peek = ' ';
-                return Token.comma;
+                return Token.div;
             case '&':
                 readch(br);
                 if (peek == '&') {

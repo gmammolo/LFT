@@ -43,7 +43,7 @@ public class Valutatore {
     }
 
     public void start() {
-        int expr_val = 0;
+        int expr_val ;
         expr_val = expr();
         match(Tag.EOF);
         System.out.println(expr_val);
@@ -104,7 +104,9 @@ public class Valutatore {
     }
 
     private int term() {
-        return termp(fact());
+        int termp_i, fact_i;
+        fact_i = fact();
+        return termp(fact_i);
     }
 
     private int termp(int termp_i) {
@@ -138,6 +140,7 @@ public class Valutatore {
         switch (look.tag) {
             case Tag.NUM:
                 fact_val = ((Number)look).value;
+                 match(Tag.NUM);
                 break;
             case '(':
                 match('(');
