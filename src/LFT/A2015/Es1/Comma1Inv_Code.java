@@ -45,7 +45,7 @@ public class Comma1Inv_Code {
  				break;
 			}
 		}
-		return state == 3;
+		return state == 0 || state == -1 || state == 1 || state == 2;
 		}
 	public static void main(String[] args)
 	{

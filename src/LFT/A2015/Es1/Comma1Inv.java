@@ -29,6 +29,7 @@ public class Comma1Inv extends DFAModel{
         AddFinalState(0);
         AddFinalState(1);
         AddFinalState(2);
+        AddFinalState(-1);
     }
 
     @Override
@@ -43,8 +44,8 @@ public class Comma1Inv extends DFAModel{
         //String line = reader.readLine();
 
         //toJava("Es1_3");
-        new Comma1().toJava("Comma1Inv_Code");
-        new Comma1().toDot("Comma1Inv_Dot");
+        new Comma1Inv().toJava("Comma1Inv_Code");
+        new Comma1Inv().toDot("Comma1Inv_Dot");
     }
     
 }

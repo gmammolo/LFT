@@ -5,7 +5,7 @@
  */
 package LFT.Lab_24_10_2014.Es2_5;
 
-import LFT.DFA.*;
+import LFT.DFA.DFA;
 
 /**
  *

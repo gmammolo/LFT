@@ -132,7 +132,7 @@ public class DFA {
      * @see #numberOfStates
      */
     public boolean validState(int p) {
-        return (p >= 0 && p < numberOfStates);
+        return (p >= -1 && p < numberOfStates);
     }
 
     /**
@@ -230,7 +230,13 @@ public class DFA {
         out += "rankdir=LR;\n";
         out += "node [shape = doublecircle];\n";
         for (Integer i : finalStates) {
-            out += "q" + i + ";\n";
+            if(i == -1) {
+                out += "qe;\n";
+            }
+            else {
+                out += "q" + i + ";\n";
+            }
+            
         }
         out += "node [shape = circle];\n";
         for (Move m : transitions.keySet()) {
@@ -300,7 +306,7 @@ public class DFA {
         s += "\t\treturn ";
         Object[] arr = finalStates.toArray();
         for (int i = 0; i < finalStates.size() - 1; i++) {
-            s += "state == " + arr[i] + " && ";
+            s += "state == " + arr[i] + " || ";
         }
         s += "state == " + String.valueOf(arr[arr.length - 1]) + ";\n\t\t}\n";
         s += "\tpublic static void main(String[] args)\n"
