@@ -32,7 +32,7 @@ public class Comma3 extends DFAModel {
 
             }
         }
-
+        /* //Metodo Pulito
         setMove(1, new RangeChar( 'A', 'K'), 3); //turno 1
         setMove(3, RangeChar.GetAlphabet(), 3);
 
@@ -43,11 +43,24 @@ public class Comma3 extends DFAModel {
         setMove(1, new RangeChar( 'L', 'Z'), 5); //turno 3
         setMove(5, RangeChar.GetAlphabet(), 5);
 
-        setMove(2, new RangeChar( 'L', 'Z'), 6); //turno 2
+        setMove(2, new RangeChar( 'L', 'Z'), 6); //turno 4
         setMove(6, RangeChar.GetAlphabet(), 6);
-
+        
         addFinalState(4);
          addFinalState(5);
+        */
+        //metodo minimizzato
+        setMove(1, new RangeChar( 'A', 'K'), 3); //turno 1
+        setMove(3, RangeChar.GetAlphabet(), 3);
+
+        setMove(2, new RangeChar( 'A', 'K'), 4); //turno 2
+        setMove(4, RangeChar.GetAlphabet(), 4);
+        
+        
+        setMove(1, new RangeChar( 'L', 'Z'), 4); //turno 3
+
+        setMove(2, new RangeChar( 'L', 'Z'), 3); //turno 4
+        addFinalState(4);
     }
 
     public static void main(String[] args) throws Exception {
