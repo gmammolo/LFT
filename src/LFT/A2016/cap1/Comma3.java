@@ -67,7 +67,7 @@ public class Comma3 extends DFAModel {
 
         Comma3 comma = new Comma3(); 
         
-        //comma.minimize();
+        comma.minimize();
         /*BUG 6-12-2016: Minimize currently not working properly*/
         
         //InputStreamReader inputStreamReader = new InputStreamReader(System.in);

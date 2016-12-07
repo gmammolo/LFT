@@ -54,6 +54,7 @@ public class Comma4 extends DFAModel {
         setMove(6, new RangeChar('L', 'Z'), 3);
 
         //setMove(3, RangeChar.GetAlphabet(), 3); //stato pozzo per quanto riguarda l'esercizio
+        
         setMove(4, RangeChar.GetAlphabetLovercase(), 4);
         setMove(4, ' ', 7);
         setMove(7, ' ', 7);
