@@ -1,4 +1,4 @@
-public class Es1Comma7_Code {
+public class Es1Comma8_Code {
 	public static boolean scan(String s)
 	{
 		int state = 0;
@@ -7,7 +7,9 @@ public class Es1Comma7_Code {
 		final char ch = s.charAt(i++);
 		switch(state) {
 			 case 0: 
-				 if(  ch == '/' ) 
+				 if(  ch == 'a' ||  ch == '*' ) 
+					 state = 0;
+				 else if(  ch == '/' ) 
 					 state = 1;
 				 else 
 					 state = -1; 
@@ -28,7 +30,7 @@ public class Es1Comma7_Code {
 				 break; 
 			 case 3: 
 				 if(  ch == '/' ) 
-					 state = 4;
+					 state = 0;
 				 else if(  ch == 'a' ) 
 					 state = 2;
 				 else 
@@ -36,7 +38,7 @@ public class Es1Comma7_Code {
 				 break; 
 			}
 		}
-		return state == 4;
+		return state == 0;
 		}
 	public static void main(String[] args)
 	{

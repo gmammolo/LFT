@@ -14,29 +14,31 @@ import main.java.com.opendfa.DFAModel;
  *
  * @author Giuseppe
  */
-public class Comma7 extends DFAModel {
+public class Comma8 extends DFAModel {
 
     @Override
     protected int numState() {
-        return 10;
+        return 4;
     }
 
     @Override
     protected void initializeDFA() {
 
+        setMove(0, new RangeChar(new char[]{'a' , '*'}), 0);
         setMove(0, '/', 1);    
         setMove(1, '*', 2);
         setMove(2, 'a', 2);
         setMove(2, '*', 3);
         setMove(3, 'a', 2);
-        setMove(3, '/', 4);
-        addFinalState(4);        
+        setMove(3, '/', 0);
+        addFinalState(0);
+        addFinalState(1);  
 
     }
 
     public static void main(String[] args) throws Exception {
 
-        Comma7 comma = new Comma7();
+        Comma8 comma = new Comma8();
 
         //comma.minimize();
         /*BUG 6-12-2016: Minimize currently not working properly*/
@@ -46,13 +48,13 @@ public class Comma7 extends DFAModel {
 //        System.out.println("Type the line:");
 //        String line = reader.readLine();
 //        System.out.println(comma.scan(line));
-        
+//        
         String outputDir = "/home/terasud/NetBeansProjects/LFT/src/LFT/A2016/cap1/";
-        System.out.println(comma.toJava("Es1Comma7_Code"));
-        comma.writeToJava("Es1Comma7_Code", outputDir);
-        System.out.println(comma.toDot("Es1Comma7_Dot"));
-        comma.writeToDot("Es1Comma7_Dot", outputDir);
-        comma.ToPng("Es1Comma7_Png", outputDir);
+        System.out.println(comma.toJava("Es1Comma8_Code"));
+        comma.writeToJava("Es1Comma8_Code", outputDir);
+        System.out.println(comma.toDot("Es1Comma8_Dot"));
+        comma.writeToDot("Es1Comma8_Dot", outputDir);
+        comma.ToPng("Es1Comma8_Png", outputDir);
     }
 
 }
