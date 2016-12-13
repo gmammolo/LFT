@@ -1,6 +1,6 @@
 /*Inizio File*/
-var _variabile_4:= 3
-var pippo:= 200; // commento 1 c
-var __pluto := pippo; 
-varFinal := 1
-/* fsdfdsfs
+/*calcolare la velocita‘*/
+d:=300; // distanza
+t:=10; // tempo
+print(d*t)
+d:=300; /*distanza*//*da Torino a Lione*/
