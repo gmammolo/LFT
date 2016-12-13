@@ -38,5 +38,4 @@ public class Word extends Token {
             Do = new Word(Tag.DO, "do"),
             Begin = new Word(Tag.BEGIN, "begin"),
             End = new Word(Tag.END, "end");
-            
 }
