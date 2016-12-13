@@ -3,3 +3,4 @@ var _variabile_4:= 3
 var pippo:= 200; // commento 1 c
 var __pluto := pippo; 
 varFinal := 1
+/* fsdfdsfs

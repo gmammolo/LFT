@@ -78,7 +78,7 @@ public class Lexer {
                 if (peek == '/') { //commento //
                     do {
                         readch(br);
-                    } while (peek != '\n'); //fine linea
+                    } while (peek != '\n' && peek != '$' && peek != (char) -1); //fine linea
                     return lexical_scan(br);
                 } else if (peek == '*') { //commento /*
                     do {
@@ -90,7 +90,7 @@ public class Lexer {
                             peek = ' ';
                             return lexical_scan(br);
                         }
-                    } while (peek != Tag.EOF);
+                    } while (peek != '$' && peek != (char) -1);
                 } else {
                     return Token.div;
                 }
