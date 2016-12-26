@@ -5,10 +5,13 @@
  */
 package LFT.AnaSint;
 
+import LFT.AnaLess.IllegalStringException;
 import LFT.AnaLess.Lexer;
 import LFT.AnaLess.Tag;
 import LFT.AnaLess.Token;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Parser {
 
@@ -23,7 +26,11 @@ public class Parser {
     }
 
     void move() {
-        look = lex.lexical_scan(pbr);
+        try {
+            look = lex.lexical_scan(pbr);
+        } catch (IllegalStringException ex) {
+            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.err.println("token = " + look);
     }
 
