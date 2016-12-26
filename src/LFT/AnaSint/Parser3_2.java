@@ -13,13 +13,13 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Parser {
+public class Parser3_2 {
 
     private Lexer lex;
     private BufferedReader pbr;
     private Token look;
 
-    public Parser(Lexer l, BufferedReader br) {
+    public Parser3_2(Lexer l, BufferedReader br) {
         lex = l;
         pbr = br;
         move();
@@ -29,7 +29,7 @@ public class Parser {
         try {
             look = lex.lexical_scan(pbr);
         } catch (IllegalStringException ex) {
-            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Parser3_2.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.err.println("token = " + look);
     }
@@ -49,13 +49,21 @@ public class Parser {
     }
 
     public void start() {
-        expr();
-        match(Tag.EOF);
+        if (look.tag == (int) '(' || look.tag == Tag.NUM) {
+            expr();
+            match(Tag.EOF);
+        } else {
+            error("Syntax error in start " + look.tag);
+        }
     }
 
     private void expr() {
-        term();
-        exprp();
+        if (look.tag == (int) '(' || look.tag == Tag.NUM) {
+            term();
+            exprp();
+        } else {
+            error("Syntax error in expr " + look.tag);
+        }
     }
 
     private void exprp() {
@@ -74,14 +82,18 @@ public class Parser {
             case Tag.EOF:
                 break;
             default:
-                error("Syntax error in exprp "+ look.tag);
+                error("Syntax error in exprp " + look.tag);
                 break;
         }
     }
 
     private void term() {
-        fact();
-        termp();
+        if (look.tag == (int) '(' || look.tag == Tag.NUM) {
+            fact();
+            termp();
+        } else {
+            error("Syntax error in term " + look.tag);
+        }
     }
 
     private void termp() {
@@ -96,14 +108,13 @@ public class Parser {
                 fact();
                 termp();
                 break;
-            //epsileon? 
             case '+':
             case '-':
             case ')':
             case Tag.EOF:
                 break;
             default:
-                error("Syntax error in termp "+ (look.tag));
+                error("Syntax error in termp " + (look.tag));
                 break;
         }
 
@@ -121,7 +132,7 @@ public class Parser {
                 break;
             default:
                 expr();
-                break;               
+                break;
         }
     }
 
@@ -130,7 +141,7 @@ public class Parser {
         String path = new File("src/LFT/AnaSint/source.txt").getAbsolutePath();
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
-            Parser parser = new Parser(lex, br);
+            Parser3_2 parser = new Parser3_2(lex, br);
             parser.start();
             br.close();
         } catch (IOException e) {

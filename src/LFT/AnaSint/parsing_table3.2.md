@@ -1,19 +1,15 @@
-# Esercizio 3.1
+# Esercizio 3.2
 
 ## Legenda  
-start := S  
+start := S
 expr := E  
-exprp := E'  
 term := T    
-termp := T'  
 fact := F  
 
 ## GRAMMATICA   
-S -> E  
-E -> TE'  
-E' -> +TE' | -TE' | ε  
-T -> FT'  
-T'-> * FT'| /FT' | ε  
+S -> E   
+E -> T((+|-)T)\*     
+T -> F((\*|/)F)\*   
 F -> (E) | NUM
 
 
@@ -23,7 +19,7 @@ FST(S) = FST(E) =  ***{ ( , NUM}***
 FST(E) = FST (T)=  ***{ ( , NUM}***  
 FST(E') = ***{ ε , + , -}***  
 FST(T) = FST(F) = ***{ ( , NUM}***  
-FST(T') = ***{ ε , * , / }***  
+FST(T') = ***{ ε , **** *** , / }***  
 FST(F) =  ***{ ( , NUM}***  
 
 ## FOLLOW
@@ -33,7 +29,8 @@ FW(E) = FW(S) + { ) } =   ***{ $, ) }***
 FW(E') = FW(E) = ***{ $, ) }***  
 FW(T) = FST(E')+FW(E) +FW(E') = ***{ $, ) +, - }***  
 FW(T') = FW(T) = FST(T') +FW(T)+FW(T')=  ***{ $, ), +, - }***  
-FW(F) = ***{ $, ), +, - , * , / }***  
+FW(F) = ***{ $, ), +, - , **** *** , / }***  
+
 
 ## Tabella di Parsing
 |    | NUM      | +          | -          | *          | /          | (        | )     | $     |
