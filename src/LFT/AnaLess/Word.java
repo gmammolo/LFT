@@ -23,19 +23,18 @@ public class Word extends Token {
     }
 
     public static final Word 
-            and = new Word(Tag.AND, "&&"),
-            or = new Word(Tag.OR, "||"),
-            eq = new Word(Tag.EQ, "=="),
-            le = new Word(Tag.LE, "<="),
-            ne = new Word(Tag.NE, "<>"),
-            ge = new Word(Tag.GE, ">="),
-            not = new Word(Tag.NOT, "not"),
-            assign = new Word(Tag.ASSIGN, ":="),
-            If = new Word(Tag.IF, "if"),
-            Then = new Word(Tag.THEN, "then"),
-            Else = new Word(Tag.ELSE, "else"),
-            While = new Word(Tag.WHILE, "while"),
-            Do = new Word(Tag.DO, "do"),
-            Begin = new Word(Tag.BEGIN, "begin"),
-            End = new Word(Tag.END, "end");
+        iftok = new Word(Tag.IF, "if"),
+        elsetok = new Word(Tag.ELSE, "else"),
+        whiletok = new Word(Tag.WHILE, "while"),
+        assign = new Word(Tag.ASSIGN, ":="),
+        print = new Word(Tag.PRINT, "print"),
+        read = new Word(Tag.READ, "read"),
+        or = new Word(Tag.OR, "||"),
+        and = new Word(Tag.AND, "&&"),
+        lt = new Word(Tag.RELOP, "<"),
+        gt = new Word(Tag.RELOP, ">"),
+        le = new Word(Tag.RELOP, "<="),
+        ge = new Word(Tag.RELOP, ">="),    
+        eq = new Word(Tag.RELOP, "=="),
+        ne = new Word(Tag.RELOP, "<>");
 }

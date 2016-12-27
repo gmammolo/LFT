@@ -21,16 +21,18 @@ public class Token {
         return "<" + tag + ">";
     }
 
-    public static final Token 
-            comma = new Token(','),
-            colon = new Token(':'),
-            semicolon = new Token(';'),
-            lpar = new Token('('),
-            rpar = new Token(')'),
+    public static final Token not = new Token('!'),
             plus = new Token('+'),
             minus = new Token('-'),
             mult = new Token('*'),
             div = new Token('/'),
+            colon = new Token(':'),
+            semicolon = new Token(';'),
+            lpt = new Token('('),
+            rpt = new Token(')'),
+            lpg = new Token('{'),
+            rpg = new Token('}'),
             lt = new Token('<'),
-            gt = new Token('>');
+            rt = new Token('>');
+
 }

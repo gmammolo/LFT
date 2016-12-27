@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import LFT.AnaLess.IllegalStringException;
+
 /**
  *
  * @author Giuseppe
@@ -26,14 +27,19 @@ public class Lexer {
     }
 
     public Lexer() {
-        reserve(new Word(Tag.VAR, "var"));
-        reserve(new Word(Tag.NOT, "not"));
-        reserve(new Word(Tag.BOOLEAN, "boolean"));
-        reserve(new Word(Tag.INTEGER, "integer"));
-        reserve(new Word(Tag.TRUE, "true"));
-        reserve(new Word(Tag.FALSE, "false"));
+//        reserve(new Word(Tag.VAR, "var"));
+//        reserve(new Word(Tag.NOT, "not"));
+//        reserve(new Word(Tag.BOOLEAN, "boolean"));
+//        reserve(new Word(Tag.INTEGER, "integer"));
+//        reserve(new Word(Tag.TRUE, "true"));
+//        reserve(new Word(Tag.FALSE, "false"));
         reserve(new Word(Tag.PRINT, "print"));
-
+        reserve(new Word(Tag.READ, "read"));
+        reserve(new Word(Tag.IF, "if"));
+        reserve(new Word(Tag.ELSE, "else"));
+        reserve(new Word(Tag.WHILE, "while"));
+        reserve(new Word(Tag.RELOP, "relop"));
+        
     }
 
     private void readch(BufferedReader br) {
@@ -52,18 +58,18 @@ public class Lexer {
             readch(br);
         }
         switch (peek) {
-            case ',':
-                peek = ' ';
-                return Token.comma;
+            //case ',':
+            //    peek = ' ';
+            //   return Token.comma;
             case ';':
                 peek = ' ';
                 return Token.semicolon;
             case '(':
                 peek = ' ';
-                return Token.lpar;
+                return Token.lpt;
             case ')':
                 peek = ' ';
-                return Token.rpar;
+                return Token.rpt;
             case '+':
                 peek = ' ';
                 return Token.plus;
@@ -100,7 +106,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.and;
                 } else {
-                    throw new IllegalStringException("Erroneous character after & at line"+line+": " + peek);
+                    throw new IllegalStringException("Erroneous character after & at line" + line + ": " + peek);
                 }
             case '|':
                 readch(br);
@@ -108,7 +114,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.or;
                 } else {
-                    throw new IllegalStringException("Erroneous character after | at line"+line+": " + peek);
+                    throw new IllegalStringException("Erroneous character after | at line" + line + ": " + peek);
                 }
             case '=':
                 readch(br);
@@ -116,7 +122,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.eq;
                 } else {
-                    throw new IllegalStringException("Erroneous character after = at line"+line+": " + peek);
+                    throw new IllegalStringException("Erroneous character after = at line" + line + ": " + peek);
                 }
             case '<':
                 readch(br);
@@ -127,7 +133,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.ne;
                 } else {
-                    return Token.lt;
+                    return Token.lpg;
                 }
             case '>':
                 readch(br);
@@ -135,7 +141,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.ge;
                 } else {
-                    return Token.gt;
+                    return Token.lt;
                 }
             case ':':
                 readch(br);
@@ -170,7 +176,7 @@ public class Lexer {
                 } else if (peek == '$' || peek == (char) -1) {
                     return new Token(Tag.EOF);
                 } else {
-                    throw new IllegalStringException("Erroneous character at line "+line+": "
+                    throw new IllegalStringException("Erroneous character at line " + line + ": "
                             + peek);
                 }
         }
