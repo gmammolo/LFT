@@ -60,7 +60,21 @@ public class Parser3_2 {
     private void expr() {
         if (look.tag == (int) '(' || look.tag == Tag.NUM) {
             term();
-            exprp();
+            switch (look.tag) {
+                case (int) '+':
+                    match('+');
+                    expr();
+                    break;
+                case (int) '-':
+                    match('-');
+                    expr();
+                    break;
+                case (int) '(':
+                case Tag.EOF:
+                    return;
+                default:
+                    break;
+            }
         } else {
             error("Syntax error in expr " + look.tag);
         }
@@ -90,7 +104,23 @@ public class Parser3_2 {
     private void term() {
         if (look.tag == (int) '(' || look.tag == Tag.NUM) {
             fact();
-            termp();
+            switch (look.tag) {
+                case (int) '*':
+                    match('*');
+                    term();
+                    break;
+                case (int) '/':
+                    match('/');
+                    term();
+                    break;
+                case (int) '(':
+                case Tag.EOF:
+                case (int) '+':
+                case (int) '-':
+                    return;
+                default:
+                    break;
+            }
         } else {
             error("Syntax error in term " + look.tag);
         }
