@@ -11,8 +11,7 @@ package LFT.AnaLess;
  */
 public class Tag {
 
-    public final static int 
-            EOF = -1,
+    public final static int EOF = -1,
             NUM = 256,
             ID = 257,
             AND = 258,
@@ -35,5 +34,7 @@ public class Tag {
             WHILE = 275,
             DO = 276,
             BEGIN = 277,
-            END = 278;
+            END = 278,
+            READ = 279,
+            RELOP = 280;
 }

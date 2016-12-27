@@ -161,7 +161,7 @@ public class Parser3_2 {
                 match(')');
                 break;
             default:
-                expr();
+                error("Syntax error in fact " + (look.tag));
                 break;
         }
     }
