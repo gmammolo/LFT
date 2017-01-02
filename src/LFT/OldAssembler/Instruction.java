@@ -3,12 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LFT.Assembler;
+package LFT.OldAssembler;
 
-/**
- *
- * @author terasud
- */
 public class Instruction {
 
     OpCode opCode;
@@ -34,9 +30,9 @@ public class Instruction {
                 break;
             case invokestatic:
                 if (operand == 1) {
-                    temp = " invokestatic " + "Output/print(I)V" + "\n";
+                    temp = " invokestatic " + "Output/printInt(I)V" + "\n";
                 } else {
-                    temp = " invokestatic " + "Output/read()I" + "\n";
+                    temp = " invokestatic " + "Output/printBool(I)V" + "\n";
                 }
                 break;
             case imul:
@@ -45,11 +41,20 @@ public class Instruction {
             case idiv:
                 temp = " idiv " + "\n";
                 break;
+            case ineg:
+                temp = " ineg " + "\n";
+                break;
             case isub:
                 temp = " isub " + "\n";
                 break;
             case istore:
                 temp = " istore " + operand + "\n";
+                break;
+            case ior:
+                temp = " ior " + "\n";
+                break;
+            case iand:
+                temp = " iand " + "\n";
                 break;
             case iload:
                 temp = " iload " + operand + "\n";
@@ -81,6 +86,7 @@ public class Instruction {
             case label:
                 temp = "L" + operand + ":\n";
                 break;
+
         }
         return temp;
     }

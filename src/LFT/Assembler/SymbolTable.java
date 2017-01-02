@@ -5,39 +5,24 @@
  */
 package LFT.Assembler;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SymbolTable {
 
-    Map<String, Type> TypeMap = new HashMap<String, Type>();
-    Map<String, Integer> OffsetMap = new HashMap<String, Integer>();
+     Map <String, Integer> OffsetMap = new HashMap <String,Integer>();
 
-    public void insert(String s, Type t, int address) {
-        if (!TypeMap.containsKey(s)) {
-            TypeMap.put(s, t);
-        } else {
-            throw new IllegalArgumentException("Variabile gia’ dichiarata.");
-        }
-        if (!OffsetMap.containsValue(address)) {
-            OffsetMap.put(s, address);
-        } else {
-            throw new IllegalArgumentException("Riferimento ad una locazione di memoria gia’ occupata da un’altra variabile. ");
-        }
+	public void insert( String s, int address ) {
+            if( !OffsetMap.containsValue(address) ) 
+                OffsetMap.put(s,address);
+            else 
+                throw new IllegalArgumentException("Reference to a memory location already occupied by another variable");
+	}
 
-    }
-
-    public Type lookupType(String s) {
-        if (TypeMap.containsKey(s)) {
-            return TypeMap.get(s);
-        }
-        throw new IllegalArgumentException("Variabile sconosciuta ." + s);
-    }
-
-    public int lookupAddress(String s) {
-        if (OffsetMap.containsKey(s)) {
-            return OffsetMap.get(s);
-        }
-        throw new IllegalArgumentException("Variabile sconosciuta.");
-    }
+	public int lookupAddress ( String s ) {
+            if( OffsetMap.containsKey(s) ) 
+                return OffsetMap.get(s);
+            else
+                return -1;
+//                throw new IllegalArgumentException("Unknown variable");
+	}
 }
