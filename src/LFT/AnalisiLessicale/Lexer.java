@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LFT.AnaLess;
+package LFT.AnalisiLessicale;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import LFT.AnaLess.IllegalStringException;
+import LFT.AnalisiLessicale.IllegalStringException;
 
 /**
  *
@@ -38,7 +38,6 @@ public class Lexer {
         reserve(new Word(Tag.IF, "if"));
         reserve(new Word(Tag.ELSE, "else"));
         reserve(new Word(Tag.WHILE, "while"));
-        reserve(new Word(Tag.RELOP, "relop"));
         
     }
 
@@ -133,7 +132,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.ne;
                 } else {
-                    return Token.lpg;
+                    return Word.lt;
                 }
             case '>':
                 readch(br);
@@ -141,7 +140,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.ge;
                 } else {
-                    return Token.lt;
+                    return Word.gt;
                 }
             case ':':
                 readch(br);
@@ -185,7 +184,7 @@ public class Lexer {
     public static void main(String[] args) throws IllegalStringException {
         Lexer lex = new Lexer();
         //String path = "C:\\Users\\Giuseppe\\Documents\\NetBeansProjects\\LFT\\src\\LFT\\AnaLess\\source.txt";
-        String path = new File("src/LFT/AnaLess/source.txt").getAbsolutePath();
+        String path = new File("src/LFT/AnalisiLessicale/source.txt").getAbsolutePath();
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Token tok;

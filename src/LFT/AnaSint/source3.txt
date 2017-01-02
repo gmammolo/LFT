@@ -1,3 +1,0 @@
-pippo :=3;
-pluto := 2;
-print(pippo);

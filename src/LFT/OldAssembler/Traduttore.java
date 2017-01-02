@@ -5,11 +5,11 @@
  */
 package LFT.OldAssembler;
 
-import LFT.AnaLess.IllegalStringException;
-import LFT.AnaLess.Number;
-import LFT.AnaLess.Lexer;
-import LFT.AnaLess.Tag;
-import LFT.AnaLess.Token;
+import LFT.AnalisiLessicale.IllegalStringException;
+import LFT.AnalisiLessicale.Number;
+import LFT.AnalisiLessicale.Lexer;
+import LFT.AnalisiLessicale.Tag;
+import LFT.AnalisiLessicale.Token;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;

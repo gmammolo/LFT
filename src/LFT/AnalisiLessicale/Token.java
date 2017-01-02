@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LFT.AnaLess;
+package LFT.AnalisiLessicale;
 
 /**
  *
@@ -31,8 +31,6 @@ public class Token {
             lpt = new Token('('),
             rpt = new Token(')'),
             lpg = new Token('{'),
-            rpg = new Token('}'),
-            lt = new Token('<'),
-            rt = new Token('>');
+            rpg = new Token('}');
 
 }

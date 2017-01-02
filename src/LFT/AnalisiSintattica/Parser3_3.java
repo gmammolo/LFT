@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LFT.AnaSint;
+package LFT.AnalisiSintattica;
 
-import LFT.AnaLess.IllegalStringException;
-import LFT.AnaLess.Lexer;
-import LFT.AnaLess.Tag;
-import LFT.AnaLess.Token;
+import LFT.AnalisiLessicale.IllegalStringException;
+import LFT.AnalisiLessicale.Lexer;
+import LFT.AnalisiLessicale.Tag;
+import LFT.AnalisiLessicale.Token;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -167,7 +167,7 @@ public class Parser3_3 {
                 exprp();
                 break;
             case ')':
-            //case ';': //TODO:aggiunto manualmnte: da controllare
+            case ';': //TODO:aggiunto manualmnte: da controllare
             case Tag.RELOP:
                 break;
             default:
@@ -200,7 +200,7 @@ public class Parser3_3 {
             case '+':
             case '-':
             case ')':
-            //case ';': //TODO:aggiunto manualmnte: da controllare
+            case ';': //TODO:aggiunto manualmnte: da controllare
             case Tag.RELOP:
                 break;
             default:
@@ -229,7 +229,7 @@ public class Parser3_3 {
 
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = new File("src/LFT/AnaSint/source3.txt").getAbsolutePath();
+        String path = new File("src/LFT/AnalisiSintattica/source3.txt").getAbsolutePath();
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Parser3_3 parser = new Parser3_3(lex, br);

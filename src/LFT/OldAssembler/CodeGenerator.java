@@ -5,7 +5,7 @@
  */
 package LFT.OldAssembler;
 
-import LFT.AnaLess.Tag;
+import LFT.AnalisiLessicale.Tag;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;

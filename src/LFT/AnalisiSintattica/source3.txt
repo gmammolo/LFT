@@ -1,0 +1,7 @@
+pippo :=3;
+pluto := 2;
+if(pippo < pluto) {
+    print(pippo);
+}
+else
+    print(pluto);

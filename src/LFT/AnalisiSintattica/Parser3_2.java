@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LFT.AnaSint;
+package LFT.AnalisiSintattica;
 
-import LFT.AnaLess.IllegalStringException;
-import LFT.AnaLess.Lexer;
-import LFT.AnaLess.Tag;
-import LFT.AnaLess.Token;
+import LFT.AnalisiLessicale.IllegalStringException;
+import LFT.AnalisiLessicale.Lexer;
+import LFT.AnalisiLessicale.Tag;
+import LFT.AnalisiLessicale.Token;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Parser3_1 {
+public class Parser3_2 {
 
     private Lexer lex;
     private BufferedReader pbr;
     private Token look;
 
-    public Parser3_1(Lexer l, BufferedReader br) {
+    public Parser3_2(Lexer l, BufferedReader br) {
         lex = l;
         pbr = br;
         move();
@@ -29,7 +29,7 @@ public class Parser3_1 {
         try {
             look = lex.lexical_scan(pbr);
         } catch (IllegalStringException ex) {
-            Logger.getLogger(Parser3_1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Parser3_2.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.err.println("token = " + look);
     }
@@ -60,7 +60,21 @@ public class Parser3_1 {
     private void expr() {
         if (look.tag == (int) '(' || look.tag == Tag.NUM) {
             term();
-            exprp();
+            switch (look.tag) {
+                case (int) '+':
+                    match('+');
+                    expr();
+                    break;
+                case (int) '-':
+                    match('-');
+                    expr();
+                    break;
+                case (int) '(':
+                case Tag.EOF:
+                    return;
+                default:
+                    break;
+            }
         } else {
             error("Syntax error in expr " + look.tag);
         }
@@ -90,7 +104,23 @@ public class Parser3_1 {
     private void term() {
         if (look.tag == (int) '(' || look.tag == Tag.NUM) {
             fact();
-            termp();
+            switch (look.tag) {
+                case (int) '*':
+                    match('*');
+                    term();
+                    break;
+                case (int) '/':
+                    match('/');
+                    term();
+                    break;
+                case (int) '(':
+                case Tag.EOF:
+                case (int) '+':
+                case (int) '-':
+                    return;
+                default:
+                    break;
+            }
         } else {
             error("Syntax error in term " + look.tag);
         }
@@ -141,7 +171,7 @@ public class Parser3_1 {
         String path = new File("src/LFT/AnaSint/source.txt").getAbsolutePath();
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
-            Parser3_1 parser = new Parser3_1(lex, br);
+            Parser3_2 parser = new Parser3_2(lex, br);
             parser.start();
             br.close();
         } catch (IOException e) {
