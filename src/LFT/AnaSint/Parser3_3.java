@@ -98,8 +98,8 @@ public class Parser3_3 {
                 match(Tag.ASSIGN);
                 expr();
                 break;
-            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare
-                break;
+            //case Tag.EOF: //TODO: Aggiunto Manualmente: verificare
+                //break;
             default:
                 error("Syntax error in stat " + look.tag);
                 break;
@@ -167,7 +167,7 @@ public class Parser3_3 {
                 exprp();
                 break;
             case ')':
-            case ';': //TODO:aggiunto manualmnte: da controllare
+            //case ';': //TODO:aggiunto manualmnte: da controllare
             case Tag.RELOP:
                 break;
             default:
@@ -200,7 +200,7 @@ public class Parser3_3 {
             case '+':
             case '-':
             case ')':
-            case ';': //TODO:aggiunto manualmnte: da controllare
+            //case ';': //TODO:aggiunto manualmnte: da controllare
             case Tag.RELOP:
                 break;
             default:
