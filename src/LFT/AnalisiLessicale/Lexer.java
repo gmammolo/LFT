@@ -150,6 +150,12 @@ public class Lexer {
                 } else {
                     return Token.colon;
                 }
+            case '{':
+                peek = ' ';
+                return Token.lpg;
+            case '}':
+                peek = ' ';
+                return Token.rpg;
             default:
                 if (Character.isLetter(peek) || peek == '_') {
                     String s = "";

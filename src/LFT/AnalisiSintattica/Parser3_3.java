@@ -76,10 +76,8 @@ public class Parser3_3 {
                 match('(');
                 bexpr();
                 match(')');
-                if (look.tag == Tag.ELSE) { //TODO: gestione "furba" della ricorsione
-                    match(Tag.ELSE);
-                    stat();
-                }
+                stat();
+                stat_p();
                 break;
             case Tag.WHILE:
                 match(Tag.WHILE);
@@ -98,10 +96,24 @@ public class Parser3_3 {
                 match(Tag.ASSIGN);
                 expr();
                 break;
-            //case Tag.EOF: //TODO: Aggiunto Manualmente: verificare
-                //break;
+            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare
+                break;
             default:
                 error("Syntax error in stat " + look.tag);
+                break;
+        }
+    }
+
+    private void stat_p() {
+        switch (look.tag) {
+            case Tag.ELSE:
+                match(Tag.ELSE);
+                stat();
+                break;
+            case (int) ';':
+                break;
+            default:
+                error("Syntax error in stat_p " + look.tag);
                 break;
         }
     }
@@ -124,14 +136,19 @@ public class Parser3_3 {
     }
 
     private void statlist_p() {
-        if (look.tag == (int) '}' || look.tag == ';') {
-            match(';');
-            stat();
-            statlist_p();
-        } else if (look.tag == Tag.EOF) { //TODO: Aggiunto Manualmente: verificare
-            return;
-        } else {
-            error("Syntax error in statlist_p " + look.tag);
+        switch (look.tag) {
+            case ';':
+                match(';');
+                stat();
+                statlist_p();
+                break;
+            case (int) '}':
+                break;
+            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare
+                break;
+            default:
+                error("Syntax error in statlist_p " + look.tag);
+                break;
         }
     }
 
@@ -168,6 +185,7 @@ public class Parser3_3 {
                 break;
             case ')':
             case ';': //TODO:aggiunto manualmnte: da controllare
+            case '}': //TODO:aggiunto manualmnte: da controllare
             case Tag.RELOP:
                 break;
             default:
@@ -201,6 +219,7 @@ public class Parser3_3 {
             case '-':
             case ')':
             case ';': //TODO:aggiunto manualmnte: da controllare
+            case '}': //TODO:aggiunto manualmnte: da controllare
             case Tag.RELOP:
                 break;
             default:

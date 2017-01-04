@@ -2,6 +2,7 @@ pippo :=3;
 pluto := 2;
 if(pippo < pluto) {
     print(pippo);
+    pippo := 5
 }
 else
     print(pluto);
