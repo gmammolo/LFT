@@ -5,6 +5,8 @@
  */
 package LFT.AnalisiLessicale;
 
+import java.util.Objects;
+
 /**
  *
  * @author Giuseppe
@@ -37,4 +39,29 @@ public class Word extends Token {
         ge = new Word(Tag.RELOP, ">="),    
         eq = new Word(Tag.RELOP, "=="),
         ne = new Word(Tag.RELOP, "<>");
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.lexeme);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Word other = (Word) obj;
+        if (!Objects.equals(this.lexeme, other.lexeme)) {
+            return false;
+        }
+        return true;
+    }
 }
