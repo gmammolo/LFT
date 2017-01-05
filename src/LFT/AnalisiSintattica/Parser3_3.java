@@ -49,7 +49,7 @@ public class Parser3_3 {
     }
 
     public void prog() {
-        if (look.tag == Tag.PRINT || look.tag == Tag.READ || look.tag == Tag.IF || look.tag == Tag.WHILE || look.tag == Tag.ID) {
+        if (look.tag == Tag.PRINT || look.tag == Tag.READ || look.tag == Tag.IF || look.tag == Tag.WHILE || look.tag == Tag.ID || look.tag == (int)'{') {
             statlist();
             match(Tag.EOF);
         } else {
@@ -96,7 +96,7 @@ public class Parser3_3 {
                 match(Tag.ASSIGN);
                 expr();
                 break;
-            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare
+            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare 
                 break;
             default:
                 error("Syntax error in stat " + look.tag);
@@ -111,6 +111,8 @@ public class Parser3_3 {
                 stat();
                 break;
             case (int) ';':
+            case (int)'}':
+            case Tag.EOF:
                 break;
             default:
                 error("Syntax error in stat_p " + look.tag);
@@ -143,8 +145,7 @@ public class Parser3_3 {
                 statlist_p();
                 break;
             case (int) '}':
-                break;
-            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare
+            case Tag.EOF:
                 break;
             default:
                 error("Syntax error in statlist_p " + look.tag);
@@ -184,9 +185,11 @@ public class Parser3_3 {
                 exprp();
                 break;
             case ')':
-            case ';': //TODO:aggiunto manualmnte: da controllare
-            case '}': //TODO:aggiunto manualmnte: da controllare
+            case ';':
+            case '}':
+            case Tag.ELSE:
             case Tag.RELOP:
+            case Tag.EOF:
                 break;
             default:
                 error("Syntax error in exprp " + look.tag);
@@ -218,9 +221,11 @@ public class Parser3_3 {
             case '+':
             case '-':
             case ')':
-            case ';': //TODO:aggiunto manualmnte: da controllare
-            case '}': //TODO:aggiunto manualmnte: da controllare
+            case ';': 
+            case '}': 
+            case Tag.ELSE:
             case Tag.RELOP:
+            case Tag.EOF:
                 break;
             default:
                 error("Syntax error in termp " + (look.tag));
