@@ -72,6 +72,9 @@ public class Instruction {
             case if_icmpgt:
                 temp = " if_icmpgt L" + operand + "\n";
                 break;
+            case ifeq:
+                temp = " ifqe L" + operand + "\n";
+                break;
             case ifne:
                 temp = " ifne L" + operand + "\n";
                 break;

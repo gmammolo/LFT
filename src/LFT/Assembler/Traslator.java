@@ -58,6 +58,11 @@ public class Traslator {
         if (look.tag == Tag.PRINT || look.tag == Tag.READ || look.tag == Tag.IF || look.tag == Tag.WHILE || look.tag == Tag.ID || look.tag == (int) '{') {
             statlist();
             match(Tag.EOF);
+            try {
+                code.toJasmin();
+            } catch (java.io.IOException e) {
+                System.out.println("IO error\n");
+            };
         } else {
             error("Syntax error in prog " + look.tag);
         }
@@ -69,28 +74,48 @@ public class Traslator {
                 match(Tag.PRINT);
                 match('(');
                 expr();
+                code.emit(OpCode.invokestatic, 1);
                 match(')');
                 break;
             case Tag.READ:
                 match(Tag.READ);
                 match('(');
-                match(Tag.ID);
-                match(')');
+                if (look.tag == Tag.ID) {
+                    int read_id_addr = st.lookupAddress(((Word) look).lexeme);
+                    if (read_id_addr == -1) {
+                        read_id_addr = count;
+                        st.insert(((Word) look).lexeme, count++);
+                    }
+                    match(Tag.ID);
+                    match(')');
+                    code.emit(OpCode.invokestatic, 0);
+                    code.emit(OpCode.istore, read_id_addr);
+                }
                 break;
             case Tag.IF:
                 match(Tag.IF);
                 match('(');
                 bexpr();
                 match(')');
+                int end_if = code.newLabel();
+                code.emit(OpCode.ifeq, end_if); //eq controlla se cima stack==0
                 stat();
+                code.emit(OpCode.ldc, 0);
+                code.emitLabel(end_if);
                 stat_p();
                 break;
             case Tag.WHILE:
                 match(Tag.WHILE);
+                int repeat_do = code.newLabel();
+                int repeat_exit = code.newLabel();
+                code.emitLabel(repeat_do);
                 match('(');
                 bexpr();
+                code.emit(OpCode.ifeq, repeat_exit);
                 match(')');
                 stat();
+                code.emit(OpCode.GOto, repeat_do);
+                code.emitLabel(repeat_exit);
                 break;
             case (int) '{':
                 match('{');
@@ -100,10 +125,10 @@ public class Traslator {
             case Tag.ID:
                 Token m_token = look;
                 match(Tag.ID);
-                String id = ((Word)look).lexeme;
+                String id = ((Word) look).lexeme;
                 match(Tag.ASSIGN);
                 expr();
-                code.emit(OpCode.iload,count);
+                code.emit(OpCode.iload, count);
                 st.insert(id, count++);
                 break;
             case Tag.EOF: //TODO: Aggiunto Manualmente: verificare 
@@ -118,7 +143,10 @@ public class Traslator {
         switch (look.tag) {
             case Tag.ELSE:
                 match(Tag.ELSE);
+                int end_else = code.newLabel();
+                code.emit(OpCode.ifne, end_else); //eq controlla se cima stack==0
                 stat();
+                code.emitLabel(end_else);
                 break;
             case (int) ';':
             case (int) '}':
