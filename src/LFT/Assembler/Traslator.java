@@ -97,10 +97,14 @@ public class Traslator {
                 match('(');
                 bexpr();
                 match(')');
+                int end_else = code.newLabel();
                 int end_if = code.newLabel();
-                code.emit(OpCode.ifeq, end_if); //eq controlla se cima stack==0
+                code.emit(OpCode.ifeq, end_else); //eq controlla se cima stack==0
                 stat();
                 code.emit(OpCode.ldc, 0);
+                code.emit(OpCode.GOto, end_if);
+                code.emitLabel(end_else);
+                code.emit(OpCode.ldc, 1);
                 code.emitLabel(end_if);
                 stat_p();
                 break;
@@ -125,11 +129,17 @@ public class Traslator {
             case Tag.ID:
                 Token m_token = look;
                 match(Tag.ID);
-                String id = ((Word) look).lexeme;
+                String id = ((Word) m_token).lexeme;
                 match(Tag.ASSIGN);
                 expr();
-                code.emit(OpCode.iload, count);
-                st.insert(id, count++);
+                int m_val = st.lookupAddress(id);
+                if (m_val == -1) {
+                    code.emit(OpCode.istore, count);
+                    st.insert(id, count++);
+                } else {
+                    code.emit(OpCode.istore, m_val);
+                }
+
                 break;
             case Tag.EOF: //TODO: Aggiunto Manualmente: verificare 
                 break;
@@ -144,13 +154,14 @@ public class Traslator {
             case Tag.ELSE:
                 match(Tag.ELSE);
                 int end_else = code.newLabel();
-                code.emit(OpCode.ifne, end_else); //eq controlla se cima stack==0
+                code.emit(OpCode.ifeq, end_else); //eq controlla se cima stack==0
                 stat();
                 code.emitLabel(end_else);
                 break;
             case (int) ';':
             case (int) '}':
             case Tag.EOF:
+                code.emit(OpCode.pop); // rimuove lo 0 inserito in stat in assenza di else
                 break;
             default:
                 error("Syntax error in stat_p " + look.tag);
@@ -303,8 +314,8 @@ public class Traslator {
     private void fact() {
         switch (look.tag) {
             case Tag.NUM:
-                match(look.tag);
                 code.emit(OpCode.ldc, ((Number) look).value);
+                match(look.tag);
                 break;
             case Tag.ID:
                 Token m_id = look;

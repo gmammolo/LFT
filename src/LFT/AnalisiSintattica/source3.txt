@@ -1,8 +1,9 @@
-pippo :=3;
-pluto := 2;
-if(pippo < pluto) {
-    print(pippo);
-    pippo := 5
-}
-else
-    print(pluto);
+a:= 3;
+b := a+2;
+if(b>a)
+    print(b)
+else {
+    print(a);
+    b:=1
+};
+print(b)

@@ -35,7 +35,8 @@ public class CodeGenerator {
     }
 
     public void toJasmin() throws IOException {
-        PrintWriter out = new PrintWriter(new FileWriter("C:\\Users\\sproston\\Documents\\LFT1617\\Translator_output\\Output.j"));
+         
+        PrintWriter out = new PrintWriter(new FileWriter(new File("src/LFT/Translator_output/Output.j").getAbsolutePath()));
         String temp = "";
         temp = temp + header;
         while (instructions.size() > 0) {

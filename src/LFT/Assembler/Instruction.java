@@ -73,7 +73,7 @@ public class Instruction {
                 temp = " if_icmpgt L" + operand + "\n";
                 break;
             case ifeq:
-                temp = " ifqe L" + operand + "\n";
+                temp = " ifeq L" + operand + "\n";
                 break;
             case ifne:
                 temp = " ifne L" + operand + "\n";
@@ -84,6 +84,8 @@ public class Instruction {
             case label:
                 temp = "L" + operand + ":\n";
                 break;
+            case pop:
+                temp = " pop \n";
         }
         return temp;
     }
