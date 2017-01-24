@@ -96,8 +96,6 @@ public class Parser3_3 {
                 match(Tag.ASSIGN);
                 expr();
                 break;
-            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare 
-                break;
             default:
                 error("Syntax error in stat " + look.tag);
                 break;

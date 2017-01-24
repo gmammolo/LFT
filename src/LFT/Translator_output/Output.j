@@ -51,12 +51,7 @@ L1:
 L2:
  ldc 1
 L3:
- ifeq L4
- iload 0
- invokestatic Output/print(I)V
- ldc 1
- istore 1
-L4:
+ pop 
  iload 1
  invokestatic Output/print(I)V
  return

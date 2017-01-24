@@ -141,8 +141,6 @@ public class Traslator {
                 }
 
                 break;
-            case Tag.EOF: //TODO: Aggiunto Manualmente: verificare 
-                break;
             default:
                 error("Syntax error in stat " + look.tag);
                 break;
