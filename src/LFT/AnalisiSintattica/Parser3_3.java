@@ -9,6 +9,8 @@ import LFT.AnalisiLessicale.IllegalStringException;
 import LFT.AnalisiLessicale.Lexer;
 import LFT.AnalisiLessicale.Tag;
 import LFT.AnalisiLessicale.Token;
+import LFT.AnalisiLessicale.Word;
+import LFT.AnalisiLessicale.Number;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,9 +51,13 @@ public class Parser3_3 {
     }
 
     public void prog() {
-        if (look.tag == Tag.PRINT || look.tag == Tag.READ || look.tag == Tag.IF || look.tag == Tag.WHILE || look.tag == Tag.ID || look.tag == (int)'{') {
+        if (look.tag == Tag.PRINT || look.tag == Tag.READ || look.tag == Tag.IF || look.tag == Tag.WHILE || look.tag == Tag.ID || look.tag == (int) '{') {
             statlist();
-            match(Tag.EOF);
+            if (look.tag == Tag.EOF) {
+                match(Tag.EOF);
+            } else {
+                error("Syntax error in prog. Expected '" + Tag.EOF + "', instead read " + look.tag);
+            }
         } else {
             error("Syntax error in prog " + look.tag);
         }
@@ -61,35 +67,71 @@ public class Parser3_3 {
         switch (look.tag) {
             case Tag.PRINT:
                 match(Tag.PRINT);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 expr();
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 break;
             case Tag.READ:
                 match(Tag.READ);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 match(Tag.ID);
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 break;
             case Tag.IF:
                 match(Tag.IF);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 bexpr();
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 stat();
                 stat_p();
                 break;
             case Tag.WHILE:
                 match(Tag.WHILE);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 bexpr();
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 stat();
                 break;
             case (int) '{':
                 match('{');
                 statlist();
-                match('}');
+                if (look.tag == '}') {
+                    match('}');
+                } else {
+                    error("Syntax error in prog. Expected '}', instead read '" + _printTag(look) + "'");
+                }
                 break;
             case Tag.ID:
                 match(Tag.ID);
@@ -109,7 +151,7 @@ public class Parser3_3 {
                 stat();
                 break;
             case (int) ';':
-            case (int)'}':
+            case (int) '}':
             case Tag.EOF:
                 break;
             default:
@@ -154,7 +196,11 @@ public class Parser3_3 {
     private void bexpr() {
         if (look.tag == Tag.ID || look.tag == Tag.NUM || look.tag == (int) '(') {
             expr();
-            match(Tag.RELOP);
+            if (look.tag == Tag.RELOP) {
+                match(Tag.RELOP);
+            } else {
+                error("Syntax error in bexpr. Expected '" + Tag.RELOP + "', instead read '" + _printTag(look) + "'");
+            }
             expr();
         } else {
             error("Syntax error in bexpr " + look.tag);
@@ -219,8 +265,8 @@ public class Parser3_3 {
             case '+':
             case '-':
             case ')':
-            case ';': 
-            case '}': 
+            case ';':
+            case '}':
             case Tag.ELSE:
             case Tag.RELOP:
             case Tag.EOF:
@@ -241,7 +287,11 @@ public class Parser3_3 {
             case '(':
                 match('(');
                 expr();
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in fact. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 break;
             default:
                 error("Syntax error in fact " + (look.tag));
@@ -259,6 +309,18 @@ public class Parser3_3 {
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static String _printTag(Token t) {
+        if (t.tag >= 0 && t.tag < 255) {
+            return "" + (char) t.tag;
+        } else if (t instanceof Word) {
+            return ((Word) t).lexeme;
+        } else if (t instanceof Number) {
+            return ""+((Number)t).value;
+        } else {
+            return "" + t.tag;
         }
     }
 }
