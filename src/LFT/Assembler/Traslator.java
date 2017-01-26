@@ -57,7 +57,11 @@ public class Traslator {
     public void prog() {
         if (look.tag == Tag.PRINT || look.tag == Tag.READ || look.tag == Tag.IF || look.tag == Tag.WHILE || look.tag == Tag.ID || look.tag == (int) '{') {
             statlist();
-            match(Tag.EOF);
+            if (look.tag == Tag.EOF) {
+                match(Tag.EOF);
+            } else {
+                error("Syntax error in prog. Expected '" + Tag.EOF + "', instead read " + look.tag);
+            }
             try {
                 code.toJasmin();
             } catch (java.io.IOException e) {
@@ -72,14 +76,26 @@ public class Traslator {
         switch (look.tag) {
             case Tag.PRINT:
                 match(Tag.PRINT);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 expr();
                 code.emit(OpCode.invokestatic, 1);
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 break;
             case Tag.READ:
                 match(Tag.READ);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 if (look.tag == Tag.ID) {
                     int read_id_addr = st.lookupAddress(((Word) look).lexeme);
                     if (read_id_addr == -1) {
@@ -87,16 +103,30 @@ public class Traslator {
                         st.insert(((Word) look).lexeme, count++);
                     }
                     match(Tag.ID);
-                    match(')');
+                    if (look.tag == ')') {
+                        match(')');
+                    } else {
+                        error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                    }
                     code.emit(OpCode.invokestatic, 0);
                     code.emit(OpCode.istore, read_id_addr);
+                } else {
+                    error("Syntax error in stat. Expected a valid id, instead read '" + _printTag(look) + "'");
                 }
                 break;
             case Tag.IF:
                 match(Tag.IF);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 bexpr();
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 int end_else = code.newLabel();
                 int end_if = code.newLabel();
                 code.emit(OpCode.ifeq, end_else); //eq controlla se cima stack==0
@@ -113,10 +143,18 @@ public class Traslator {
                 int repeat_do = code.newLabel();
                 int repeat_exit = code.newLabel();
                 code.emitLabel(repeat_do);
-                match('(');
+                if (look.tag == '(') {
+                    match('(');
+                } else {
+                    error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
+                }
                 bexpr();
                 code.emit(OpCode.ifeq, repeat_exit);
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in prog. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 stat();
                 code.emit(OpCode.GOto, repeat_do);
                 code.emitLabel(repeat_exit);
@@ -124,7 +162,11 @@ public class Traslator {
             case (int) '{':
                 match('{');
                 statlist();
-                match('}');
+                if (look.tag == '}') {
+                    match('}');
+                } else {
+                    error("Syntax error in prog. Expected '}', instead read '" + _printTag(look) + "'");
+                }
                 break;
             case Tag.ID:
                 Token m_token = look;
@@ -204,7 +246,11 @@ public class Traslator {
         if (look.tag == Tag.ID || look.tag == Tag.NUM || look.tag == (int) '(') {
             expr();
             Token m_relop = look;
-            match(Tag.RELOP);
+            if (look.tag == Tag.RELOP) {
+                match(Tag.RELOP);
+            } else {
+                error("Syntax error in bexpr. Expected '<=, >=, ==, < or >', instead read '" + _printTag(look) + "'");
+            }
             expr();
             int ltrue = code.newLabel();
             int lnext = code.newLabel();
@@ -323,7 +369,11 @@ public class Traslator {
             case '(':
                 match('(');
                 expr();
-                match(')');
+                if (look.tag == ')') {
+                    match(')');
+                } else {
+                    error("Syntax error in fact. Expected ')', instead read '" + _printTag(look) + "'");
+                }
                 break;
             default:
                 error("Syntax error in fact " + (look.tag));
@@ -341,6 +391,18 @@ public class Traslator {
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static String _printTag(Token t) {
+        if (t.tag >= 0 && t.tag < 255) {
+            return "" + (char) t.tag;
+        } else if (t instanceof Word) {
+            return ((Word) t).lexeme;
+        } else if (t instanceof Number) {
+            return "" + ((Number) t).value;
+        } else {
+            return "" + t.tag;
         }
     }
 }

@@ -86,7 +86,11 @@ public class Parser3_3 {
                 } else {
                     error("Syntax error in stat. Expected '(', instead read '" + _printTag(look) + "'");
                 }
+                if(look.tag == Tag.ID)
                 match(Tag.ID);
+                else {
+                     error("Syntax error in stat. Expected a valid id, instead read '" + _printTag(look) + "'");
+                }
                 if (look.tag == ')') {
                     match(')');
                 } else {
@@ -135,7 +139,11 @@ public class Parser3_3 {
                 break;
             case Tag.ID:
                 match(Tag.ID);
-                match(Tag.ASSIGN);
+                if (look.tag == Tag.ASSIGN) {
+                    match(Tag.ASSIGN);
+                } else {
+                    error("Syntax error in prog. Expected " + _printTag(Word.assign) + ", instead read '" + _printTag(look) + "'");
+                }
                 expr();
                 break;
             default:
@@ -199,7 +207,7 @@ public class Parser3_3 {
             if (look.tag == Tag.RELOP) {
                 match(Tag.RELOP);
             } else {
-                error("Syntax error in bexpr. Expected '" + Tag.RELOP + "', instead read '" + _printTag(look) + "'");
+                error("Syntax error in bexpr. Expected '<=, >=, ==, < or >', instead read '" + _printTag(look) + "'");
             }
             expr();
         } else {
@@ -318,7 +326,7 @@ public class Parser3_3 {
         } else if (t instanceof Word) {
             return ((Word) t).lexeme;
         } else if (t instanceof Number) {
-            return ""+((Number)t).value;
+            return "" + ((Number) t).value;
         } else {
             return "" + t.tag;
         }
