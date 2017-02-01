@@ -1,4 +1,5 @@
-public class Es1Comma1_Code {
+package LFT.A2016.cap1;
+ public class Es1Comma1_Code {
 	public static boolean scan(String s)
 	{
 		int state = 0;
